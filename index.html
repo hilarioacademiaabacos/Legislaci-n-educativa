@@ -273,15 +273,17 @@ footer strong{color:var(--ink);}
 /* ===== CONSULTOR IA ===== */
 #iaFab{
   position:fixed;bottom:22px;right:22px;z-index:50;
-  width:60px;height:60px;border-radius:50%;
+  height:52px;padding:0 20px 0 16px;border-radius:30px;
   background:var(--green-dark);color:var(--paper);
   border:2px solid var(--gold);
-  font-size:24px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;letter-spacing:.02em;
+  cursor:pointer;
   box-shadow:0 4px 14px rgba(0,0,0,0.28);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;gap:9px;
   transition:transform .15s ease;
 }
-#iaFab:hover{transform:scale(1.06);}
+#iaFab .ia-fab-icon{font-size:20px;line-height:1;}
+#iaFab:hover{transform:scale(1.05);}
 #iaPanel{
   position:fixed;bottom:96px;right:22px;z-index:50;
   width:min(420px,92vw);height:min(560px,72vh);
@@ -319,7 +321,7 @@ footer strong{color:var(--ink);}
   background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:0 14px;cursor:pointer;
 }
 .ia-inputbar button:disabled{opacity:.5;cursor:default;}
-.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;}
+.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;overflow-y:auto;}
 .ia-gate p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;}
 .ia-gate input{padding:9px 11px;border:1.3px solid var(--line);border-radius:4px;font-family:'Source Serif 4',serif;}
 .ia-gate button{
@@ -327,6 +329,20 @@ footer strong{color:var(--ink);}
   font-family:'JetBrains Mono',monospace;font-weight:600;cursor:pointer;
 }
 .ia-gate .ia-err{color:var(--stamp-red);font-size:12px;display:none;}
+.ia-help{
+  border:1px solid var(--line);border-radius:5px;padding:9px 12px;background:var(--paper-2);
+}
+.ia-help summary{
+  cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--green);
+  font-weight:600;list-style:none;
+}
+.ia-help summary::-webkit-details-marker{display:none;}
+.ia-help ol{margin:10px 0 8px;padding-left:18px;font-size:12.5px;line-height:1.6;color:var(--ink);}
+.ia-help li{margin-bottom:4px;}
+.ia-help > a{
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);
+  text-decoration:underline;
+}
 
 @media (max-width:860px){
   .layout{flex-direction:column;padding:0 14px 40px;}
@@ -350,7 +366,7 @@ footer strong{color:var(--ink);}
     <div>
       <p class="masthead-eyebrow">Academia Ábacos</p>
       <h1>Legislación Educativa<br><em>de Extremadura</em></h1>
-      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para uso del profesorado y del personal asesor del CPR.</p>
+      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para opositores al Cuerpo de Maestros y docentes en activo.</p>
     </div>
     <div class="header-meta">
       <div>Versión del expediente: <strong>3.3 / 2026</strong></div>
@@ -394,7 +410,7 @@ footer strong{color:var(--ink);}
   <strong>Aviso sobre numeraciones repetidas:</strong> algunas Instrucciones comparten número y año pero proceden de órganos distintos (p. ej. varias Instrucciones 8/2024 y 17/2024, emitidas por la Dirección General de Formación Profesional, Innovación e Inclusión Educativa en un caso y por la Secretaría General de Educación y FP en otro). Se han mantenido separadas y se indica el órgano emisor en cada ficha para evitar confusiones.
 </footer>
 
-<button id="iaFab" title="Consultor de legislación (IA)">⚖️</button>
+<button id="iaFab" title="Consultor de legislación (IA)"><span class="ia-fab-icon">⚖️</span><span>Consultor IA</span></button>
 <div id="iaPanel">
   <div class="ia-header">
     <span>⚖️ Consultor de legislación</span>
@@ -405,7 +421,16 @@ footer strong{color:var(--ink);}
     <input type="password" id="iaCode" placeholder="Tu clave de la API de Gemini (AIza…)">
     <button id="iaCodeSubmit">Entrar</button>
     <p class="ia-err" id="iaErr">Esa clave no ha funcionado. Revísala e inténtalo de nuevo.</p>
-    <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);text-align:center;">¿No tienes clave? Consíguela gratis en aistudio.google.com ↗</a>
+    <details class="ia-help">
+      <summary>¿No tienes clave? Cómo conseguirla (gratis, 1 minuto) ↓</summary>
+      <ol>
+        <li>Entra en <strong>aistudio.google.com/apikey</strong> con tu cuenta de Google.</li>
+        <li>Pulsa <strong>"Create API key"</strong> (o "Crear clave de API").</li>
+        <li>Copia la clave que aparece (empieza por <strong>AIza…</strong>).</li>
+        <li>Pégala aquí arriba y pulsa "Entrar". Es gratis y solo se guarda en tu navegador.</li>
+      </ol>
+      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Abrir aistudio.google.com ↗</a>
+    </details>
   </div>
   <div class="ia-messages" id="iaMessages" style="display:none;"></div>
   <div class="ia-inputbar" id="iaInputBar" style="display:none;">
@@ -625,12 +650,20 @@ function matchesSearch(entry, term){
 
 function renderEntries(){
   const folder = FOLDERS.find(f=>f.id===activeFolder);
-  document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
-  document.getElementById('folderDesc').textContent = folder.desc;
+  const searching = !!searchTerm;
 
-  let list = DATA.filter(d=>d.c===activeFolder);
-  if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
-  if(searchTerm) list = list.filter(d=>matchesSearch(d, searchTerm));
+  let list;
+  if(searching){
+    list = DATA.filter(d=>matchesSearch(d, searchTerm));
+    if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
+    document.getElementById('folderTitle').textContent = `Resultados para "${searchTerm}"`;
+    document.getElementById('folderDesc').textContent = 'Búsqueda en todo el expediente, en todas las carpetas. Borra el texto de búsqueda para volver a navegar por carpetas.';
+  } else {
+    list = DATA.filter(d=>d.c===activeFolder);
+    if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
+    document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
+    document.getElementById('folderDesc').textContent = folder.desc;
+  }
 
   document.getElementById('folderCount').textContent = `${list.length} norma${list.length===1?'':'s'}`;
 
@@ -648,12 +681,13 @@ function renderEntries(){
     el.className = 'entry';
     const estadoTag = entry.st ? `<span class="tag ${entry.st.startsWith('derog')?'estado-derogado':'estado-parcial'}">${entry.st}</span>` : '';
     const stageTags = entry.e.map(s=>`<span class="tag">${STAGE_LABEL[s]}</span>`).join('');
+    const folderTag = searching ? `<span class="tag" style="border-color:var(--green);color:var(--green);">Carpeta ${entry.c}</span>` : '';
     el.innerHTML = `
       <div class="stamp" data-stage="${primaryStage}">${primaryStage}</div>
       <div class="entry-body">
         <div class="tipo-fecha">${entry.t}${entry.n!=='—'?' '+entry.n:''}${entry.d!=='—'?', '+entry.d:''} <span class="fuente">${entry.f}</span></div>
         <p class="entry-title">${entry.ti}</p>
-        <div class="entry-tags">${stageTags}${estadoTag}</div>
+        <div class="entry-tags">${folderTag}${stageTags}${estadoTag}</div>
         ${entry.note ? `<p class="entry-note">${entry.note}</p>` : ''}
       </div>
       <a class="entry-link" href="${buildLink(entry)}" target="_blank" rel="noopener">${entry.url ? 'Ver documento ↗' : 'Consultar ↗'}</a>

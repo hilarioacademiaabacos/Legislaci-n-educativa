@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expediente · Legislación Educativa de Extremadura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1E9D6;
+  --paper-2:#E7DBBE;
+  --paper-3:#DCCBA3;
+  --ink:#2A231A;
+  --ink-soft:#5B4F3E;
+  --green:#2E4F36;
+  --green-dark:#1C3421;
+  --gold:#A4802F;
+  --stamp-red:#8B3A2B;
+  --line:#C9B98D;
+  --shadow:0 2px 0 rgba(42,35,26,0.08);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse at top left, rgba(255,255,255,0.35), transparent 60%),
+    var(--paper);
+  color:var(--ink);
+  font-family:'Source Serif 4', serif;
+  min-height:100vh;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(42,35,26,0.015) 0px, rgba(42,35,26,0.015) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:relative;
+  background:var(--green-dark);
+  color:var(--paper);
+  padding:28px 28px 20px;
+  border-bottom:6px double var(--gold);
+}
+.header-inner{
+  max-width:1280px;margin:0 auto;
+  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;
+}
+.masthead-eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 6px;
+}
+h1{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:clamp(28px,4vw,42px);
+  margin:0;line-height:1.05;
+  letter-spacing:-0.01em;
+}
+h1 em{
+  font-style:italic;font-weight:500;color:var(--gold);
+}
+.masthead-sub{
+  font-family:'Source Serif 4', serif;
+  font-size:14.5px;color:#D8CCA8;
+  margin-top:8px;max-width:560px;line-height:1.5;
+}
+.header-meta{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;color:#C9B98D;
+  text-align:right;line-height:1.9;
+}
+.header-meta strong{color:var(--paper);}
+
+/* ===== TOOLBAR ===== */
+.toolbar{
+  max-width:1280px;margin:0 auto;
+  padding:18px 28px;
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+  position:relative;z-index:1;
+}
+.search-wrap{
+  flex:1 1 280px;position:relative;
+}
+.search-wrap input{
+  width:100%;
+  font-family:'Source Serif 4', serif;
+  font-size:15px;
+  padding:11px 16px 11px 38px;
+  border:1.5px solid var(--line);
+  border-radius:3px;
+  background:var(--paper);
+  color:var(--ink);
+  outline:none;
+}
+.search-wrap input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(46,79,54,0.12);}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-soft);}
+.search-wrap input::placeholder{color:var(--ink-soft);opacity:.7;}
+
+.stage-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;font-weight:500;letter-spacing:.03em;
+  padding:7px 12px;border-radius:20px;
+  border:1.3px solid var(--line);
+  background:transparent;color:var(--ink-soft);
+  cursor:pointer;transition:all .15s ease;
+  white-space:nowrap;
+}
+.chip:hover{border-color:var(--ink-soft);}
+.chip.active{background:var(--green);border-color:var(--green);color:var(--paper);}
+.chip.active[data-stage="INF"]{background:#B5651D;border-color:#B5651D;}
+.chip.active[data-stage="PRI"]{background:var(--green);border-color:var(--green);}
+.chip.active[data-stage="ESO"]{background:#2E5C8A;border-color:#2E5C8A;}
+.chip.active[data-stage="BAC"]{background:#5C3B7A;border-color:#5C3B7A;}
+.chip.active[data-stage="FP"]{background:var(--stamp-red);border-color:var(--stamp-red);}
+.chip.active[data-stage="COMUN"]{background:var(--gold);border-color:var(--gold);color:var(--ink);}
+
+.count-note{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;color:var(--ink-soft);
+  padding:6px 4px;
+}
+
+/* ===== LAYOUT ===== */
+.layout{
+  max-width:1280px;margin:0 auto;
+  display:flex;gap:0;
+  position:relative;z-index:1;
+  padding:0 28px 60px;
+}
+nav.folders{
+  flex:0 0 250px;
+  padding-top:6px;
+}
+.folder-tab{
+  display:flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:12px;
+  padding:11px 14px;
+  cursor:pointer;
+  border:1.3px solid var(--line);
+  border-right:none;
+  background:var(--paper-2);
+  color:var(--ink-soft);
+  margin-bottom:-1px;
+  position:relative;
+  transition:all .12s ease;
+  border-radius:4px 0 0 4px;
+}
+.folder-tab:hover{background:var(--paper-3);color:var(--ink);}
+.folder-tab.active{
+  background:var(--paper);
+  color:var(--ink);
+  font-weight:700;
+  border-color:var(--green);
+  box-shadow:inset 3px 0 0 var(--green);
+}
+.folder-num{
+  font-weight:700;color:var(--gold);flex:0 0 auto;
+}
+.folder-tab.active .folder-num{color:var(--green);}
+.folder-tag{
+  margin-left:auto;font-size:10px;color:var(--ink-soft);opacity:.65;
+}
+
+main{
+  flex:1;
+  background:var(--paper);
+  border:1.3px solid var(--green);
+  border-radius:0 4px 4px 4px;
+  padding:26px 30px 40px;
+  min-height:500px;
+}
+.folder-heading{
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:12px;margin-bottom:6px;
+}
+.folder-heading h2{
+  font-family:'Fraunces', serif;font-weight:700;
+  font-size:24px;margin:0;
+}
+.folder-heading .folder-count{
+  font-family:'JetBrains Mono', monospace;font-size:12px;color:var(--ink-soft);
+}
+.folder-desc{
+  font-size:14px;color:var(--ink-soft);margin:6px 0 20px;line-height:1.6;max-width:760px;
+}
+
+/* ===== ENTRY CARD ===== */
+.entries{display:flex;flex-direction:column;gap:0;}
+.entry{
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  gap:16px;
+  align-items:start;
+  padding:16px 4px;
+  border-bottom:1px solid var(--line);
+  transition:background .12s ease;
+}
+.entry:hover{background:rgba(46,79,54,0.04);}
+.entry:last-child{border-bottom:none;}
+
+.stamp{
+  width:56px;height:56px;border-radius:50%;
+  border:2px solid currentColor;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:'JetBrains Mono', monospace;
+  font-weight:700;font-size:11px;line-height:1.1;
+  transform:rotate(-6deg);
+  opacity:.9;
+  color:var(--green);
+}
+.stamp[data-stage="INF"]{color:#B5651D;}
+.stamp[data-stage="ESO"]{color:#2E5C8A;}
+.stamp[data-stage="BAC"]{color:#5C3B7A;}
+.stamp[data-stage="FP"]{color:var(--stamp-red);}
+.stamp[data-stage="COMUN"]{color:var(--gold);transform:rotate(4deg);}
+
+.entry-body .tipo-fecha{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11.5px;color:var(--ink-soft);letter-spacing:.02em;
+  margin-bottom:3px;
+}
+.entry-body .tipo-fecha .fuente{
+  display:inline-block;margin-left:8px;padding:1px 6px;border-radius:3px;
+  font-size:10px;border:1px solid var(--line);
+}
+.entry-title{
+  font-size:15.5px;line-height:1.4;color:var(--ink);margin:0 0 6px;font-weight:600;
+}
+.entry-tags{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.tag{
+  font-family:'JetBrains Mono', monospace;font-size:9.5px;letter-spacing:.04em;
+  padding:2px 7px;border-radius:10px;border:1px solid var(--line);color:var(--ink-soft);
+}
+.tag.estado-parcial{border-color:var(--gold);color:var(--gold);}
+.tag.estado-derogado{border-color:var(--stamp-red);color:var(--stamp-red);}
+.entry-note{font-size:12.5px;color:var(--ink-soft);margin-top:6px;font-style:italic;line-height:1.5;}
+
+.entry-link{
+  align-self:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;font-weight:600;
+  color:var(--green);
+  text-decoration:none;
+  border:1.3px solid var(--green);
+  padding:8px 12px;border-radius:3px;
+  white-space:nowrap;
+  transition:all .12s ease;
+}
+.entry-link:hover{background:var(--green);color:var(--paper);}
+
+.empty-state{
+  padding:50px 10px;text-align:center;color:var(--ink-soft);font-style:italic;
+}
+
+footer{
+  max-width:1280px;margin:0 auto;padding:24px 28px 50px;
+  font-size:12.5px;color:var(--ink-soft);line-height:1.7;
+  border-top:1px solid var(--line);
+  position:relative;z-index:1;
+}
+footer strong{color:var(--ink);}
+
+/* ===== CONSULTOR IA ===== */
+#iaFab{
+  position:fixed;bottom:22px;right:22px;z-index:50;
+  width:60px;height:60px;border-radius:50%;
+  background:var(--green-dark);color:var(--paper);
+  border:2px solid var(--gold);
+  font-size:24px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,0.28);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s ease;
+}
+#iaFab:hover{transform:scale(1.06);}
+#iaPanel{
+  position:fixed;bottom:96px;right:22px;z-index:50;
+  width:min(420px,92vw);height:min(560px,72vh);
+  background:var(--paper);border:1.5px solid var(--green);
+  border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  display:none;flex-direction:column;overflow:hidden;
+}
+#iaPanel.open{display:flex;}
+.ia-header{
+  background:var(--green-dark);color:var(--paper);
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  font-family:'Fraunces',serif;font-weight:600;font-size:15px;
+  border-bottom:3px double var(--gold);
+}
+.ia-header button{background:none;border:none;color:var(--paper);font-size:18px;cursor:pointer;opacity:.8;}
+.ia-header button:hover{opacity:1;}
+.ia-messages{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.ia-msg{max-width:88%;font-size:13.5px;line-height:1.55;padding:9px 12px;border-radius:6px;white-space:pre-wrap;}
+.ia-msg.user{align-self:flex-end;background:var(--paper-3);border:1px solid var(--line);}
+.ia-msg.bot{align-self:flex-start;background:var(--paper-2);border:1px solid var(--line);}
+.ia-msg.bot .ia-cite{
+  display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--green);
+}
+.ia-msg.system{align-self:center;font-style:italic;color:var(--ink-soft);font-size:12px;background:none;}
+.ia-typing{align-self:flex-start;font-size:12px;color:var(--ink-soft);font-style:italic;}
+.ia-inputbar{
+  display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--paper-2);
+}
+.ia-inputbar input{
+  flex:1;font-family:'Source Serif 4',serif;font-size:13.5px;padding:9px 11px;
+  border:1.3px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);
+}
+.ia-inputbar button{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+  background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:0 14px;cursor:pointer;
+}
+.ia-inputbar button:disabled{opacity:.5;cursor:default;}
+.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;}
+.ia-gate p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;}
+.ia-gate input{padding:9px 11px;border:1.3px solid var(--line);border-radius:4px;font-family:'Source Serif 4',serif;}
+.ia-gate button{
+  background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:10px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;cursor:pointer;
+}
+.ia-gate .ia-err{color:var(--stamp-red);font-size:12px;display:none;}
+
+@media (max-width:860px){
+  .layout{flex-direction:column;padding:0 14px 40px;}
+  nav.folders{
+    flex:none;display:flex;flex-wrap:wrap;gap:6px;padding-bottom:14px;
+  }
+  .folder-tab{border-right:1.3px solid var(--line);border-radius:4px;margin-bottom:0;}
+  main{border-radius:4px;padding:20px 16px 30px;}
+  .entry{grid-template-columns:44px 1fr;grid-template-areas:"stamp body" ". link";}
+  .entry-link{grid-area:link;justify-self:start;margin-top:8px;}
+  .stamp{width:44px;height:44px;font-size:9.5px;}
+  .toolbar{padding:14px 14px;}
+  header{padding:22px 16px 16px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <p class="masthead-eyebrow">Academia Ábacos</p>
+      <h1>Legislación Educativa<br><em>de Extremadura</em></h1>
+      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para uso del profesorado y del personal asesor del CPR.</p>
+    </div>
+    <div class="header-meta">
+      <div>Versión del expediente: <strong>3.3 / 2026</strong></div>
+      <div>Fuente base: DG de Personal Docente</div>
+      <div>Actualizado: <strong id="today"></strong></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar por título, decreto, orden, instrucción…">
+  </div>
+  <div class="stage-chips" id="stageChips">
+    <button class="chip active" data-stage="ALL">Todas las etapas</button>
+    <button class="chip" data-stage="INF">Infantil</button>
+    <button class="chip" data-stage="PRI">Primaria</button>
+    <button class="chip" data-stage="ESO">ESO</button>
+    <button class="chip" data-stage="BAC">Bachillerato</button>
+    <button class="chip" data-stage="FP">FP / Régimen especial</button>
+    <button class="chip" data-stage="COMUN">Común a varias etapas</button>
+  </div>
+</div>
+<div class="count-note" id="countNote" style="max-width:1280px;margin:0 auto;padding:0 28px 10px;"></div>
+
+<div class="layout">
+  <nav class="folders" id="foldersNav"></nav>
+  <main>
+    <div class="folder-heading">
+      <h2 id="folderTitle"></h2>
+      <span class="folder-count" id="folderCount"></span>
+    </div>
+    <p class="folder-desc" id="folderDesc"></p>
+    <div class="entries" id="entriesList"></div>
+  </main>
+</div>
+
+<footer>
+  <strong>Cómo usar los enlaces:</strong> cada botón "Consultar" abre una búsqueda directa en el sitio oficial correspondiente (BOE para normativa estatal, DOE/Junta de Extremadura para normativa autonómica), con el título y la referencia exactos de la norma como término de búsqueda. Verificar 90+ enlaces uno a uno de forma manual no era fiable en esta versión, así que se optó por este método: en la inmensa mayoría de los casos el primer resultado es el documento correcto. Comprueba siempre que consultas el <strong>texto consolidado</strong> (con las modificaciones posteriores incorporadas) antes de citarlo ante tribunal.<br><br>
+  <strong>Aviso sobre numeraciones repetidas:</strong> algunas Instrucciones comparten número y año pero proceden de órganos distintos (p. ej. varias Instrucciones 8/2024 y 17/2024, emitidas por la Dirección General de Formación Profesional, Innovación e Inclusión Educativa en un caso y por la Secretaría General de Educación y FP en otro). Se han mantenido separadas y se indica el órgano emisor en cada ficha para evitar confusiones.
+</footer>
+
+<button id="iaFab" title="Consultor de legislación (IA)">⚖️</button>
+<div id="iaPanel">
+  <div class="ia-header">
+    <span>⚖️ Consultor de legislación</span>
+    <button id="iaClose">✕</button>
+  </div>
+  <div id="iaGate" class="ia-gate">
+    <p>Este asistente responde citando la normativa de este expediente. Funciona con <strong>tu propia clave gratuita</strong> de la API de Gemini: se guarda solo en este navegador y nunca pasa por ningún servidor de terceros.</p>
+    <input type="password" id="iaCode" placeholder="Tu clave de la API de Gemini (AIza…)">
+    <button id="iaCodeSubmit">Entrar</button>
+    <p class="ia-err" id="iaErr">Esa clave no ha funcionado. Revísala e inténtalo de nuevo.</p>
+    <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);text-align:center;">¿No tienes clave? Consíguela gratis en aistudio.google.com ↗</a>
+  </div>
+  <div class="ia-messages" id="iaMessages" style="display:none;"></div>
+  <div class="ia-inputbar" id="iaInputBar" style="display:none;">
+    <input type="text" id="iaInput" placeholder="Pregunta sobre legislación educativa de Extremadura…">
+    <button id="iaSend">Enviar</button>
+  </div>
+</div>
+
+<script src="leyes-texto.js"></script>
+<script>
+document.getElementById('today').textContent = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+
+const FOLDERS = [
+  {id:'00', name:'Constitución y normativa europea', desc:'Marco constitucional y europeo de referencia. Esta carpeta queda abierta para que añadas la Constitución Española (art. 27) y las recomendaciones/directivas europeas que uses; el resumen normativo de origen no incluía referencias específicas de este bloque.'},
+  {id:'01', name:'LOE–LOMLOE (texto consolidado)', desc:'Ley Orgánica de Educación y su modificación por la LOMLOE. Norma básica estatal, común a todas las etapas.'},
+  {id:'02', name:'Ley de Educación de Extremadura', desc:'Ley autonómica que desarrolla la competencia educativa de la Comunidad Autónoma.'},
+  {id:'03', name:'Educación Infantil', desc:'Ordenación, currículo y evaluación del segundo ciclo de Infantil.'},
+  {id:'04', name:'Educación Primaria', desc:'Ordenación, currículo y evaluación de Educación Primaria.'},
+  {id:'05', name:'ESO', desc:'Ordenación, currículo y evaluación de la Educación Secundaria Obligatoria, incluida la modalidad para personas adultas.'},
+  {id:'06', name:'Bachillerato', desc:'Ordenación, currículo, evaluación y organización del Bachillerato.'},
+  {id:'07', name:'Formación Profesional', desc:'FP del sistema educativo y enseñanzas de régimen especial: música, danza, artes plásticas y diseño, arte dramático, enseñanzas deportivas e idiomas (EOI).'},
+  {id:'08', name:'Evaluación', desc:'Normativa transversal sobre evaluación objetiva, promoción, reclamaciones y pruebas extraordinarias, común a varias etapas.'},
+  {id:'09', name:'Atención a la diversidad e inclusión', desc:'Respuesta educativa a la diversidad, orientación educativa y psicopedagógica, unidades específicas, protocolos sanitarios y de convivencia relacionados, y programas de inclusión.'},
+  {id:'10', name:'Organización y funcionamiento de centros', desc:'Reglamentos orgánicos, horarios, bibliotecas escolares, ATE y programas de innovación organizativa.'},
+  {id:'11', name:'Convivencia', desc:'Igualdad de género, alumnado acompañante/mediación y protocolos de convivencia y acoso escolar.'},
+  {id:'12', name:'Admisión y escolarización', desc:'Procedimiento de admisión del alumnado en centros sostenidos con fondos públicos.'},
+  {id:'13', name:'Función docente', desc:'Condiciones de trabajo del profesorado itinerante y figuras de apoyo como el ATE o el Docente de Acompañamiento Escolar.'},
+  {id:'14', name:'Instrucciones de inicio de curso', desc:'Instrucción anual que unifica las actuaciones de inicio y desarrollo de cada curso escolar, junto con las resoluciones complementarias de calendario y ratio del mismo curso. La ficha vigente corresponde al curso 2026/2027 (Instrucción n.º 15/2026).'},
+  {id:'15', name:'Resoluciones y órdenes complementarias', desc:'Programas educativos, absentismo escolar y demás normativa complementaria que no encaja en una única etapa o bloque anterior.'},
+];
+
+// e: etapas [INF, PRI, ESO, BAC, FP, COMUN]  f: fuente BOE/DOE  st: estado si no vigente
+const DATA = [
+// 01 LOE-LOMLOE
+{c:'01',t:'Ley Orgánica',n:'2/2006',d:'3 de mayo',ti:'Ley Orgánica 2/2006, de 3 de mayo, de Educación (LOE)',e:['COMUN'],f:'BOE'},
+{c:'01',t:'Ley Orgánica',n:'3/2020',d:'29 de diciembre',ti:'Ley Orgánica 3/2020, de 29 de diciembre, por la que se modifica la LOE (LOMLOE)',e:['COMUN'],f:'BOE'},
+// 02 LEEX
+{c:'02',t:'Ley',n:'4/2011',d:'7 de marzo',ti:'Ley 4/2011, de 7 de marzo, de Educación de Extremadura (LEEX)',e:['COMUN'],f:'DOE'},
+// 03 Infantil
+{c:'03',t:'Real Decreto',n:'95/2022',d:'1 de febrero',ti:'Real Decreto 95/2022, por el que se establecen la ordenación y las enseñanzas mínimas de la Educación Infantil',e:['INF'],f:'BOE'},
+{c:'03',t:'Decreto',n:'98/2022',d:'20 de julio',ti:'Decreto 98/2022, por el que se establecen la ordenación y el currículo de la Educación Infantil en Extremadura',e:['INF'],f:'DOE',note:'Incluye la evaluación de la etapa (artículos 16 y 17).'},
+// 04 Primaria
+{c:'04',t:'Real Decreto',n:'126/2014',d:'28 de febrero',ti:'Real Decreto 126/2014, por el que se establece el currículo básico de la Educación Primaria',e:['PRI'],f:'BOE',st:'derogado por RD 157/2022 y normativa LOMLOE'},
+{c:'04',t:'Decreto',n:'103/2014',d:'10 de junio',ti:'Decreto 103/2014, por el que se establece el currículo de Educación Primaria en Extremadura',e:['PRI'],f:'DOE',st:'aplicación transitoria, sustituido por el Decreto 107/2022'},
+{c:'04',t:'Decreto',n:'107/2022',d:'28 de julio',ti:'Decreto 107/2022, por el que se establecen la ordenación y el currículo de la Educación Primaria en Extremadura',e:['PRI'],f:'DOE',note:'Incluye la evaluación y promoción de la etapa (artículos 22 y 23). Norma de referencia vigente para Primaria.'},
+// 05 ESO
+{c:'05',t:'Decreto',n:'110/2022',d:'22 de agosto',ti:'Decreto 110/2022, por el que se establecen la ordenación y el currículo de la ESO en Extremadura',e:['ESO'],f:'DOE'},
+{c:'05',t:'Decreto',n:'82/2024',d:'23 de julio',ti:'Decreto 82/2024, por el que se establecen la ordenación y el currículo de la Educación Secundaria para personas adultas en Extremadura',e:['ESO'],f:'DOE'},
+{c:'05',t:'Orden',n:'—',d:'24 de marzo de 2023',ti:'Orden de 24 de marzo de 2023, por la que se regulan los programas de diversificación curricular en centros que imparten ESO en Extremadura',e:['ESO'],f:'DOE',note:'En el resumen normativo de origen figura agrupada junto a Bachillerato; su contenido corresponde a ESO.'},
+{c:'05',t:'Modificación en trámite',n:'—',d:'anunciada en 2026',ti:'Modificación del Decreto 110/2022, de 22 de agosto, para incluir la materia optativa "Extremestiza: puente entre Extremadura y América" en 3.º y 4.º de ESO',e:['ESO'],f:'DOE',st:'en tramitación, sin publicar aún en el DOE',note:'Anunciada en la Instrucción 15/2026 (curso 2026/2027). Atribución docente: especialidades de Geografía e Historia, Lengua Castellana y Literatura, y Biología y Geología (base vigesimoquinta.2.f de la Instrucción 15/2026). Consulta la carpeta 14 para el detalle.'},
+// 06 Bachillerato
+{c:'06',t:'Decreto',n:'109/2022',d:'22 de agosto',ti:'Decreto 109/2022, por el que se establecen la ordenación y el currículo del Bachillerato en Extremadura',e:['BAC'],f:'DOE',note:'Incluye la evaluación y promoción de la etapa (artículos 33, 34 y 35).'},
+{c:'06',t:'Orden',n:'—',d:'16 de abril de 2024',ti:'Orden de 16 de abril de 2024, por la que se regula la organización y el funcionamiento del Bachillerato en Extremadura',e:['BAC'],f:'DOE'},
+// 07 FP + régimen especial
+{c:'07',t:'Ley Orgánica',n:'3/2022',d:'31 de marzo',ti:'Ley Orgánica 3/2022, de ordenación e integración de la Formación Profesional',e:['FP'],f:'BOE'},
+{c:'07',t:'Real Decreto',n:'659/2023',d:'18 de julio',ti:'Real Decreto 659/2023, por el que se desarrolla la ordenación del Sistema de Formación Profesional',e:['FP'],f:'BOE'},
+{c:'07',t:'Instrucción',n:'15/2024',d:'24 de julio de 2024',ti:'Instrucción n.º 15/2024, de la Dirección General de Formación Profesional, Inclusión e Innovación Educativa, normas de aplicación de la FP presencial 2024-2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Instrucción',n:'16/2024',d:'2024',ti:'Instrucción n.º 16/2024, de la Dirección General de Formación Profesional, Inclusión e Innovación Educativa, organización de Ciclos Formativos en modalidad virtual 2024/2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'140/2012',d:'13 de julio',ti:'Decreto 140/2012, currículo de las enseñanzas elementales y profesionales de Danza en Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Resolución',n:'—',d:'15 de abril de 2024',ti:'Resolución de 15 de abril de 2024, acceso y matriculación en enseñanzas de Danza 2024-2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'110/2007',d:'22 de mayo',ti:'Decreto 110/2007, currículo de las enseñanzas elementales de Música de régimen especial',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'54/2022',d:'18 de mayo',ti:'Decreto 54/2022, modifica el Decreto 110/2007 e incorpora la especialidad de Órgano',e:['FP'],f:'DOE'},
+{c:'07',t:'Resolución',n:'—',d:'19 de abril de 2024',ti:'Resolución de 19 de abril de 2024, acceso y matriculación en enseñanzas elementales y profesionales de Música 2024-2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'111/2007',d:'22 de mayo',ti:'Decreto 111/2007, currículo de las enseñanzas profesionales de Música de régimen especial',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'28/2014',d:'4 de marzo',ti:'Decreto 28/2014, plan de estudios de las enseñanzas artísticas superiores de Música en Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Orden',n:'—',d:'9 de mayo de 2013',ti:'Orden de 9 de mayo de 2013, pruebas de acceso y admisión en enseñanzas superiores de música, arte dramático y diseño',e:['FP'],f:'DOE'},
+{c:'07',t:'Orden',n:'—',d:'28 de marzo de 2016',ti:'Orden de 28 de marzo de 2016, modifica la Orden de 9 de mayo de 2013 (pruebas de acceso enseñanzas superiores)',e:['FP'],f:'DOE'},
+{c:'07',t:'Real Decreto',n:'613/1998',d:'17 de abril',ti:'Real Decreto 613/1998, currículo y prueba de acceso a ciclos de Artes Plásticas y Diseño (Artes Aplicadas al Muro)',e:['FP'],f:'BOE'},
+{c:'07',t:'Decreto',n:'16/2018',d:'6 de febrero',ti:'Decreto 16/2018, currículo del Título de Técnico Superior de Artes Plásticas y Diseño en Cerámica Artística',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'17/2018',d:'6 de febrero',ti:'Decreto 17/2018, currículo del Título de Técnico en Reproducciones Artísticas en Piedra',e:['FP'],f:'DOE'},
+{c:'07',t:'Orden',n:'—',d:'16 de junio de 2009',ti:'Orden de 16 de junio de 2009, convocatoria de pruebas de acceso a enseñanzas profesionales de Artes Plásticas y Diseño',e:['FP'],f:'DOE'},
+{c:'07',t:'Resolución',n:'—',d:'19 de abril de 2024',ti:'Resolución de 19 de abril de 2024, acceso y matriculación en enseñanzas profesionales de Artes Plásticas y Diseño 2024-2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'27/2014',d:'4 de marzo',ti:'Decreto 27/2014, plan de estudios de las enseñanzas artísticas superiores de Arte Dramático en Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'26/2014',d:'4 de marzo',ti:'Decreto 26/2014, plan de estudios de las enseñanzas artísticas superiores de Diseño en Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Resolución',n:'—',d:'22 de abril de 2024',ti:'Resolución de 22 de abril de 2024, acceso y admisión en Grado de Música, Arte Dramático y Diseño 2024-2025',e:['FP'],f:'DOE'},
+{c:'07',t:'Resolución',n:'—',d:'26 de agosto de 2016',ti:'Resolución de 26 de agosto de 2016, currículo de aplicación en las enseñanzas deportivas de régimen especial',e:['FP'],f:'DOE'},
+{c:'07',t:'Orden',n:'—',d:'24 de agosto de 2016',ti:'Orden de 24 de agosto de 2016, pruebas de madurez y de carácter general para el acceso a enseñanzas deportivas',e:['FP'],f:'DOE'},
+{c:'07',t:'Instrucción',n:'9/2019',d:'12 de febrero de 2019',ti:'Instrucción 9/2019, expedición de certificados académicos de las enseñanzas deportivas de régimen especial',e:['FP'],f:'DOE'},
+{c:'07',t:'Instrucción',n:'6/2022',d:'2022',ti:'Instrucción n.º 6/2022 de la SGE, expedición de certificados académicos del bloque común de formaciones deportivas',e:['FP'],f:'DOE'},
+{c:'07',t:'Decreto',n:'132/2018',d:'1 de agosto',ti:'Decreto 132/2018, ordenación y currículo de las enseñanzas de idiomas de régimen especial en Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Orden',n:'—',d:'30 de julio de 2020',ti:'Orden de 30 de julio de 2020, evaluación y certificación de competencias lingüísticas en las EOI de Extremadura',e:['FP'],f:'DOE'},
+{c:'07',t:'Instrucción',n:'34/2013',d:'2013',ti:'Instrucción n.º 34/2013 de la SGE, organización de cursos específicos en las Escuelas Oficiales de Idiomas',e:['FP'],f:'DOE'},
+{c:'07',t:'Instrucción',n:'7/2024',d:'2 de mayo de 2024',ti:'Instrucción n.º 7/2024, régimen y funcionamiento de las aulas adscritas a las EOI para el curso 2024-2025',e:['FP'],f:'DOE'},
+// 08 Evaluación
+{c:'08',t:'Orden',n:'—',d:'3 de junio de 2020',ti:'Orden de 3 de junio de 2020, derecho a una evaluación objetiva y procedimiento de reclamación de calificaciones',e:['COMUN'],f:'DOE'},
+{c:'08',t:'Instrucción',n:'2/2021',d:'2020-2021',ti:'Instrucción 2/2021, evaluación, promoción y acreditación académica en Ciclos de Formación Profesional Básica',e:['FP'],f:'DOE'},
+{c:'08',t:'Orden',n:'—',d:'9 de diciembre de 2022',ti:'Orden de 9 de diciembre de 2022, regula la evaluación del alumnado de Infantil, Primaria, ESO y Bachillerato en Extremadura',e:['COMUN'],f:'DOE'},
+{c:'08',t:'Orden',n:'—',d:'22 de marzo de 2024',ti:'Orden de 22 de marzo de 2024, pruebas o actividades personalizadas extraordinarias para la obtención del título de Graduado en ESO',e:['ESO'],f:'DOE'},
+// 09 Atención a la diversidad
+{c:'09',t:'Decreto',n:'228/2014',d:'14 de octubre',ti:'Decreto 228/2014, regula la respuesta educativa a la diversidad del alumnado en Extremadura',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucciones',n:'—',d:'18 de abril de 2000',ti:'Instrucciones de 18 de abril de 2000, procedimiento de evaluación psicopedagógica y dictamen de escolarización',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'13/2001',d:'2001',ti:'Instrucción n.º 13/2001, medidas de atención al alumnado con dificultades de escolarización por salud o itinerancia familiar',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'9/2024',d:'2024',ti:'Instrucción 9/2024, de la Dirección General de Formación, Innovación e Inclusión Educativa, organización de la unidad de atención al alumnado con TEA',e:['COMUN'],f:'DOE',note:'Órgano emisor: Dirección General de Formación, Innovación e Inclusión Educativa. No confundir con la Instrucción 9/2024 de la Secretaría General de Educación (bloque de Programas).'},
+{c:'09',t:'Instrucción',n:'8/2024',d:'2024',ti:'Instrucción 8/2024, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, organización de la unidad de atención al alumnado con altas capacidades intelectuales',e:['COMUN'],f:'DOE',note:'Órgano emisor: Dirección General de Formación Profesional, Innovación e Inclusión Educativa. No confundir con la Instrucción 8/2024 de la Secretaría General de Educación (programa Activa-mente, bloque de Programas).'},
+{c:'09',t:'Instrucción',n:'2/2015',d:'2015',ti:'Instrucción 2/2015 de la SGE, aspectos sobre la atención a la diversidad según el Decreto 228/2014',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orden',n:'—',d:'12 de febrero de 2015',ti:'Orden de 12 de febrero de 2015, organización y funcionamiento de las aulas especializadas para alumnado con TEA',e:['COMUN'],f:'DOE',st:'parcialmente derogada por la Orden de 3 de enero de 2022 (arts. 5.3 y 6)'},
+{c:'09',t:'Orden',n:'—',d:'27 de febrero de 2004',ti:'Orden de 27 de febrero de 2004, procedimiento para orientar la respuesta educativa al alumnado superdotado intelectualmente',e:['COMUN'],f:'DOE',st:'derogada salvo el artículo noveno (enseñanzas de régimen especial)'},
+{c:'09',t:'Orden',n:'—',d:'6 de julio de 2012',ti:'Orden de 6 de julio de 2012, crea las Aulas Abiertas Especializadas de Educación Especial en centros ordinarios',e:['COMUN'],f:'DOE',st:'derogado el artículo 4.1 (adscripción del alumnado)'},
+{c:'09',t:'Orden',n:'—',d:'24 de marzo de 2023',ti:'Orden de 24 de marzo de 2023, programas de diversificación curricular en centros que imparten ESO (referencia cruzada con la carpeta 05)',e:['ESO'],f:'DOE'},
+{c:'09',t:'Resolución',n:'—',d:'29 de abril de 1996',ti:'Resolución de 29 de abril de 1996, organización de los Departamentos de Orientación en Institutos de Secundaria',e:['ESO','BAC'],f:'DOE'},
+{c:'09',t:'Resolución',n:'—',d:'30 de abril de 1996',ti:'Resolución de 30 de abril de 1996, Plan de actividades de los departamentos de Orientación de Secundaria',e:['ESO','BAC'],f:'DOE'},
+{c:'09',t:'Orden',n:'—',d:'24 de febrero de 2005',ti:'Orden de 24 de febrero de 2005, sectorización de los Equipos de Orientación Educativa y Psicopedagógica',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orden',n:'—',d:'22 de junio de 2009',ti:'Orden de 22 de junio de 2009, crea los equipos de orientación específicos de atención al alumnado con TGD',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'26/2010',d:'10 de septiembre de 2010',ti:'Instrucción 26/2010, funcionamiento de los Equipos de Orientación Educativa y Psicopedagógica Generales, de Atención Temprana, de Deficientes Auditivos y TGD',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'33/2012',d:'14 de septiembre de 2012',ti:'Instrucción 33/2012, organización y funcionamiento de los Equipos de orientación generales, de atención temprana y específicos',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orden',n:'—',d:'2 de julio de 2012',ti:'Orden de 2 de julio de 2012, creación de los Equipos de Orientación Específicos de Atención al Alumnado con Trastornos Graves de Conducta',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Circular',n:'2/2021',d:'26 de octubre de 2021',ti:'Circular 2/2021, tramitación de demandas de colaboración con los equipos específicos de atención al alumnado con TEA',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'14/2024',d:'26 de junio de 2024',ti:'Instrucción n.º 14/2024, unifica las actuaciones de inicio y desarrollo del curso escolar 2024/2025',e:['COMUN'],f:'DOE',note:'Instrucción anual de inicio de curso: consulta también la carpeta 14 y sustitúyela por la versión del curso vigente.'},
+{c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de Actuación Conjunta para el Alumnado con TDAH',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Convenio / Protocolo',n:'2016',d:'2016',ti:'Convenio de colaboración 2016. Protocolo de Intervención con la ONCE',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de Atención al niño/a y adolescente con diabetes en la escuela',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo para la acogida y atención de niños/as con enfermedades raras o poco frecuentes',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de colaboración Sanidad-Educación para la asignación de personal de enfermería a centros educativos',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de suicidio: Guía de prevención e intervención de la conducta suicida en el ámbito educativo',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orientaciones',n:'—',d:'—',ti:'Orientaciones para la actuación de los centros en casos de progenitores/tutores divorciados, separados o parejas de hecho',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orientaciones / Protocolo',n:'—',d:'—',ti:'Orientaciones educativas y Protocolo de acoso escolar ante alteraciones de la convivencia',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orientaciones',n:'—',d:'—',ti:'Orientaciones para la Accesibilidad Cognitiva en centros con Aula Especializada TEA',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Orientaciones',n:'—',d:'—',ti:'Orientaciones para el alumnado ucraniano',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucción',n:'4/2026',d:'2026',ti:'Instrucción 4/2026, de la Dirección General de Innovación e Inclusión Educativa, referente a la organización y funcionamiento del Plan ORIENTA XXI para el avance del modelo de la escuela inclusiva en centros de Educación Infantil y Primaria sostenidos con fondos públicos, curso 2026/2027',e:['INF','PRI'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0004/documentos/Instrucci%C3%B3n_4_2026_ORIENTA_XXI%28F%29.pdf',note:'Sustituye a la Instrucción 23/2024. Corregida por la Corrección de errores de las Instrucciones 1/2026 a 4/2026 de la misma Dirección General.'},
+{c:'09',t:'Instrucción',n:'2/2026',d:'2026',ti:'Instrucción 2/2026, de la Dirección General de Innovación e Inclusión Educativa, organización y funcionamiento del programa INCLUYE de Educación Inclusiva (FSE+ PGE) para la prevención, detección y apoyo del alumnado con necesidades educativas especiales, curso 2026/2027',e:['INF','PRI'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0004/documentos/Instrucci%C3%B3n_2_2026_INCLUYE_26_27%28F%29.pdf',note:'Sustituye a la Instrucción 24/2024. Corregida por la Corrección de errores de las Instrucciones 1/2026 a 4/2026 de la misma Dirección General.'},
+{c:'09',t:'Instrucción',n:'1/2026',d:'2026',ti:'Instrucción 1/2026, de la Dirección General de Innovación e Inclusión Educativa, por la que se regula el desarrollo del Programa de Bienestar Emocional y Protección en el ámbito educativo, curso 2026/2027',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0004/documentos/Instrucci%C3%B3n_1_2026_BIENESTAR_EMOCIONAL_26_27%28F%29.pdf',note:'Contacto: bienestaremocional@educarex.es. Corregida por la Corrección de errores de las Instrucciones 1/2026 a 4/2026 de la misma Dirección General.'},
+{c:'09',t:'Corrección de errores',n:'—',d:'2026',ti:'Corrección de errores de las Instrucciones 1/2026, 2/2026, 3/2026 y 4/2026, de la Dirección General de Innovación e Inclusión Educativa',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0061/documentos/CORRECI%C3%93N_ERRORES_Instrucciones_1_a_4_2026%28F%29.pdf'},
+// 10 Organización de centros
+{c:'10',t:'Real Decreto',n:'82/1996',d:'26 de enero',ti:'Real Decreto 82/1996, Reglamento Orgánico de las Escuelas de Infantil y Colegios de Primaria',e:['INF','PRI'],f:'BOE'},
+{c:'10',t:'Real Decreto',n:'83/1996',d:'26 de enero',ti:'Real Decreto 83/1996, Reglamento Orgánico de los Institutos de Educación Secundaria',e:['ESO','BAC','FP'],f:'BOE'},
+{c:'10',t:'Instrucciones',n:'—',d:'27 de junio de 2006',ti:'Instrucciones de 27 de junio de 2006, normas de organización y funcionamiento de Escuelas Infantiles, CEIP y Centros de Educación Especial',e:['INF','PRI'],f:'DOE'},
+{c:'10',t:'Instrucciones',n:'—',d:'27 de junio de 2006',ti:'Instrucciones de 27 de junio de 2006, normas de organización y funcionamiento de los IES e IESO',e:['ESO','BAC','FP'],f:'DOE'},
+{c:'10',t:'Resolución',n:'—',d:'30 de enero de 2007',ti:'Resolución de 30 de enero de 2007, condiciones de trabajo para maestros/as que desarrollan su actividad de forma itinerante',e:['PRI'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'17 de junio de 2011',ti:'Orden de 17 de junio de 2011, horarios de los centros públicos de Infantil y Primaria y específicos de Educación Especial',e:['INF','PRI'],f:'DOE'},
+{c:'10',t:'Instrucción',n:'14/2016',d:'2016',ti:'Instrucción n.º 14/2016 de la SGE, organización y funcionamiento del colectivo de Auxiliar Técnico Educativo (ATE)',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'21 de junio de 2018',ti:'Orden de 21 de junio de 2018, regula la Red de Bibliotecas Escolares de Extremadura',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Decreto',n:'68/2017',d:'23 de mayo',ti:'Decreto 68/2017, bases reguladoras de ayudas para la mejora de las bibliotecas escolares',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Decreto',n:'12/2023',d:'22 de febrero',ti:'Decreto 12/2023, funcionamiento de las Redes de Innovación y Educación para el Desarrollo Sostenible',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'2 de octubre de 2024',ti:'Orden de 2 de octubre de 2024, convocatoria de incorporación a las Redes de Innovación y Educación para el Desarrollo Sostenible',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Instrucción',n:'5/2026',d:'6 de julio de 2026',ti:'Instrucción 5/2026, de la Dirección General de Innovación e Inclusión Educativa, relativa al Plan de Educación y Competencia Digital de Extremadura "INNOVATED"',e:['COMUN'],f:'DOE',note:'Norma vigente para el curso 2026/2027. Sustituye a la Instrucción 18/2025 (que a su vez sustituyó a la 17/2024) de la misma Dirección General. Regula el Proyecto de Educación Digital (PED) de centro y los programas AdFE, CITE, CREA, FND, Librarium, Meteoescuela, RadioEdu y Centros INNOVATED.'},
+{c:'10',t:'Instrucción',n:'3/2025',d:'2024/2025',ti:'Instrucción 3/2025, acompañamiento en el programa "Código Escuela 4.0" durante el curso 2024/2025',e:['INF','PRI'],f:'DOE'},
+{c:'10',t:'Circular',n:'9/2017',d:'septiembre de 2017',ti:'Circular n.º 9/2017 de la SGE, protocolo de actuación ante urgencias sanitarias en los centros educativos',e:['COMUN'],f:'DOE'},
+// 11 Convivencia
+{c:'11',t:'Instrucción',n:'4/2021',d:'2021',ti:'Instrucción n.º 4/2021, elaboración e implementación del Plan para la Igualdad de Género en los centros educativos',e:['COMUN'],f:'DOE'},
+{c:'11',t:'Instrucción',n:'8/2026',d:'9 de junio de 2026',ti:'Instrucción 8/2026, de la Secretaría General de Educación, por la que se convoca la selección de centros para el programa de convivencia escolar "Ayuda entre iguales. Alumnado acompañante. Espacios escolares para la convivencia", curso 2026/2027',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0054/documentos/Instrucci%C3%B3n_8_2026_Ayuda_entre_Iguales%28F%29.pdf',note:'Sustituye a la Instrucción 13/2024.'},
+{c:'11',t:'Orientaciones / Protocolo',n:'—',d:'—',ti:'Orientaciones para el Plan de Actuación ante alteraciones de la convivencia por acoso escolar. Protocolo de acoso escolar',e:['COMUN'],f:'DOE'},
+// 12 Admisión
+{c:'12',t:'Decreto',n:'128/2021',d:'17 de noviembre',ti:'Decreto 128/2021, regula la admisión del alumnado de Infantil, Primaria, ESO y Bachillerato en centros sostenidos con fondos públicos',e:['INF','PRI','ESO','BAC'],f:'DOE'},
+{c:'12',t:'Resolución',n:'—',d:'18 de diciembre de 2023',ti:'Resolución de 18 de diciembre de 2023, convoca el procedimiento de admisión del alumnado para el curso 2024/2025',e:['INF','PRI','ESO','BAC'],f:'DOE'},
+{c:'12',t:'Orden',n:'—',d:'3 de enero de 2022',ti:'Orden de 3 de enero de 2022, desarrolla el procedimiento para la admisión del alumnado en centros sostenidos con fondos públicos',e:['INF','PRI','ESO','BAC'],f:'DOE'},
+// 13 Función docente
+{c:'13',t:'Resolución',n:'—',d:'30 de enero de 2007',ti:'Resolución de 30 de enero de 2007, condiciones de trabajo del profesorado itinerante (referencia cruzada con la carpeta 10)',e:['PRI'],f:'DOE'},
+{c:'13',t:'Instrucción',n:'14/2016',d:'2016',ti:'Instrucción n.º 14/2016, organización y funcionamiento del ATE (referencia cruzada con la carpeta 10)',e:['COMUN'],f:'DOE'},
+{c:'13',t:'Instrucción',n:'6/2021',d:'2021',ti:'Instrucción n.º 6/2021, asignación del Docente de Acompañamiento Escolar (D.A.E.) para alumnado convaleciente en su domicilio',e:['PRI','ESO'],f:'DOE'},
+// 14 Instrucciones de inicio de curso
+{c:'14',t:'Instrucción',n:'15/2026',d:'24 de junio de 2026',ti:'Instrucción n.º 15/2026, de la Secretaría General de Educación, por la que se unifican las actuaciones correspondientes al inicio y desarrollo del curso escolar 2026/2027',e:['COMUN'],f:'DOE',note:'Instrucción general de inicio de curso (49 bases): calendario escolar, ordenación académica, horarios del profesorado, cuestiones de profesorado, documentos del centro, convivencia, órganos de gobierno y otros aspectos. Novedades destacadas del curso 2026/2027: nueva materia optativa de ESO "Extremestiza: puente entre Extremadura y América" (3.º y 4.º ESO, pendiente la modificación formal del Decreto 110/2022); nuevo módulo "Evaluación Competencial" en la plataforma Rayuela; y anuncio de nuevos Decretos de organización y funcionamiento de centros (sustitutos de los RD 82/1996 y 83/1996) con publicación prevista para este curso. Para Formación Profesional, la Dirección General de Formación Profesional dicta instrucciones propias complementarias. Reemplaza a la Instrucción n.º 14/2025 del curso 2025/2026.'},
+{c:'14',t:'Resolución',n:'—',d:'15 de junio de 2026',ti:'Resolución de 15 de junio de 2026, de la Secretaría General de Educación, por la que se aprueba el calendario escolar para el curso 2026/2027',e:['COMUN'],f:'DOE',note:'Fija el período lectivo y el procedimiento de solicitud de modificaciones del calendario (resuelvo décimo), referenciado en la base segunda de la Instrucción 15/2026.'},
+{c:'14',t:'Resolución',n:'—',d:'4 de marzo de 2026',ti:'Resolución de 4 de marzo de 2026, de la Secretaría General de Educación y Formación Profesional, por la que se establece la relación de alumnos por aula para el curso 2026/2027',e:['COMUN'],f:'DOE',note:'Ratio de alumnado por aula en centros públicos, citada en la base decimotercera de la Instrucción 15/2026.'},
+{c:'14',t:'Resolución',n:'—',d:'24 de marzo de 2026',ti:'Resolución de 24 de marzo de 2026, de la Secretaría General de Educación y Formación Profesional, por la que se determina la relación media de alumnado/profesor por unidad escolar en los centros privados concertados para el curso 2026/2027',e:['COMUN'],f:'DOE'},
+{c:'14',t:'Decreto',n:'112/2026',d:'26 de mayo',ti:'Decreto 112/2026, por el que se establece la estructura orgánica de la Consejería de Educación y Formación Profesional',e:['COMUN'],f:'DOE',note:'Base competencial de la Instrucción 15/2026.'},
+{c:'13',t:'Orden',n:'—',d:'29 de agosto de 2024',ti:'Orden de 29 de agosto de 2024, régimen de permisos del personal docente que imparte las enseñanzas de la Ley Orgánica 2/2006 en el ámbito de la Consejería de Educación de la Junta de Extremadura',e:['COMUN'],f:'DOE'},
+{c:'13',t:'Instrucción',n:'7/2022',d:'9 de mayo de 2022',ti:'Instrucción n.º 7/2022, de la Secretaría General de Educación, proceso de designación de la persona coordinadora de bienestar y protección en los centros educativos y concreción de sus funciones',e:['COMUN'],f:'DOE'},
+// 15 Resoluciones y órdenes complementarias
+{c:'11',t:'Ley',n:'8/2021',d:'4 de junio',ti:'Ley 8/2021, de 4 de junio, de protección integral a la infancia y la adolescencia frente a la violencia',e:['COMUN'],f:'BOE',note:'Referencia para el Plan de Convivencia de los centros (art. 31) y para el requisito de acreditación de no haber sido condenado por delitos contra la libertad sexual (art. 57.1) exigido a todo el personal en contacto habitual con menores.'},
+{c:'11',t:'Instrucción',n:'3/2024',d:'2024',ti:'Instrucción 3/2024, de la Secretaría General de Educación y Formación Profesional, sobre el uso del teléfono móvil y otros dispositivos electrónicos personales en los centros educativos',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Decreto',n:'142/2005',d:'7 de junio',ti:'Decreto 142/2005, prevención, control y seguimiento del absentismo escolar en Extremadura',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Orden',n:'—',d:'19 de diciembre de 2005',ti:'Orden de 19 de diciembre de 2005, actuaciones de la Consejería de Educación para la prevención del absentismo escolar',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Orden',n:'—',d:'15 de junio de 2007',ti:'Orden de 15 de junio de 2007, aprueba el Plan Regional para la Prevención, Control y Seguimiento del Absentismo Escolar',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'1/2021',d:'2021-2022',ti:'Instrucción 1/2021, convocatoria del Programa Escolar de Consumo de Frutas y Hortalizas',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'8/2023',d:'2023',ti:'Instrucción n.º 8/2023, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, desarrollo del Programa INITIA XXI',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'10/2026',d:'2026',ti:'Instrucción n.º 10/2026, de la Secretaría General de Educación, por la que se regula el programa experimental "Activa-mente: codocencia para el aprendizaje físicamente activo" y se establece la selección de centros públicos, curso 2026/2027',e:['INF','PRI'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/instruccion-activa-mente-1782213249.pdf',note:'Sustituye a la Instrucción 8/2024. No confundir con la Instrucción 8/2026 de la Secretaría General de Educación (programa "Ayuda entre iguales", carpeta 11) ni con otras Instrucciones 8/2024 o 8/2026 de otros órganos.'},
+{c:'15',t:'Instrucción',n:'9/2024',d:'2024-2025',ti:'Instrucción n.º 9/2024, de la Secretaría General de Educación y Formación Profesional, pruebas homologadas de certificación B1 de inglés en 4.º ESO y FP de grado medio bilingüe',e:['ESO','FP'],f:'DOE',note:'Órgano emisor: Secretaría General de Educación y Formación Profesional. No confundir con la Instrucción 9/2024 de TEA (carpeta 09).'},
+{c:'15',t:'Instrucción',n:'11/2021',d:'2021-2022',ti:'Instrucción n.º 11/2021, participación en el programa de cooperación territorial "TRANSITA PLUS"',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'12/2021',d:'2021-2022',ti:'Instrucción n.º 12/2021, participación en el Programa de Cooperación Territorial PROA+',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'16/2021',d:'2021',ti:'Instrucción n.º 16/2021, desarrollo de actividades palanca en centros participantes en el Programa PROA+ 21-24',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'2/2023',d:'2023',ti:'Instrucción n.º 2/2023, organización y funcionamiento del refuerzo educativo competencial en centros PROA+',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'3/2026',d:'2026',ti:'Instrucción 3/2026, de la Dirección General de Innovación e Inclusión Educativa, por la que se establecen los criterios de selección de centros y la organización y funcionamiento del Programa Conecta-2: refuerzo educativo desde la codocencia, curso 2026/2027',e:['PRI','ESO'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0004/documentos/Instrucci%C3%B3n_3_2026_CONECTA2_26_27%28F%29.pdf',note:'Sustituye a la Instrucción 18/2024. Corregida por la Corrección de errores de las Instrucciones 1/2026 a 4/2026 de la misma Dirección General.'},
+{c:'15',t:'Instrucción',n:'17/2024',d:'2024/2025',ti:'Instrucción n.º 17/2024, de la Secretaría General de Educación y Formación Profesional, realización de Intercambios Escolares',e:['ESO','BAC','FP'],f:'DOE',note:'Órgano emisor: Secretaría General de Educación y Formación Profesional. No confundir con la Instrucción 17/2024 de INNOVATED (carpeta 10).'},
+{c:'15',t:'Instrucción',n:'21/2024',d:'2024/2025',ti:'Instrucción n.º 21/2024, regula el Programa "Yo en el cole, tú en casa"',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'22/2024',d:'6 de noviembre de 2024',ti:'Instrucción 22/2024, procedimiento para el desarrollo de programas intergeneracionales',e:['COMUN'],f:'DOE'},
+{c:'15',t:'Instrucción',n:'12/2026',d:'2026',ti:'Instrucción n.º 12/2026, de la Secretaría General de Educación, organización y funcionamiento del programa de refuerzo de la competencia lectora "EducaLectura", curso 2026/2027',e:['INF','PRI','ESO'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/educalectura-26-27-definitivo-f-1782213249.pdf',note:'Sustituye a la Instrucción 26/2024.'},
+{c:'15',t:'Instrucción',n:'13/2026',d:'2026',ti:'Instrucción n.º 13/2026, de la Secretaría General de Educación, organización y funcionamiento del programa de refuerzo de la competencia matemática "EducaMatex", curso 2026/2027',e:['PRI','ESO'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/educamatex-26-27-definitivo-f-1782213249.pdf',note:'Sustituye a la Instrucción 27/2024.'},
+];
+
+// ---------- RENDER ----------
+const STAGE_LABEL = {INF:'Infantil',PRI:'Primaria',ESO:'ESO',BAC:'Bachillerato',FP:'FP / Rég. especial',COMUN:'Común'};
+let activeFolder = '01';
+let activeStage = 'ALL';
+let searchTerm = '';
+
+function buildLink(entry){
+  if(entry.url) return entry.url;
+  const domain = entry.f === 'BOE' ? 'boe.es' : 'doe.juntaex.es';
+  const q = `${entry.t !== '—' ? entry.t : ''} ${entry.n !== '—' ? entry.n : ''} ${entry.ti}`.trim();
+  return `https://www.google.com/search?q=${encodeURIComponent('site:'+domain+' '+q)}`;
+}
+
+function renderFolders(){
+  const nav = document.getElementById('foldersNav');
+  nav.innerHTML = '';
+  FOLDERS.forEach(f=>{
+    const count = DATA.filter(d=>d.c===f.id).length;
+    const btn = document.createElement('div');
+    btn.className = 'folder-tab' + (f.id===activeFolder ? ' active' : '');
+    btn.innerHTML = `<span class="folder-num">${f.id}</span><span>${f.name}</span><span class="folder-tag">${count||''}</span>`;
+    btn.onclick = ()=>{ activeFolder = f.id; searchTerm=''; document.getElementById('searchInput').value=''; renderAll(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderStageChips(){
+  document.querySelectorAll('#stageChips .chip').forEach(c=>{
+    c.classList.toggle('active', c.dataset.stage === activeStage);
+  });
+}
+
+function matchesSearch(entry, term){
+  if(!term) return true;
+  const hay = `${entry.t} ${entry.n} ${entry.d} ${entry.ti} ${entry.note||''}`.toLowerCase();
+  return hay.includes(term.toLowerCase());
+}
+
+function renderEntries(){
+  const folder = FOLDERS.find(f=>f.id===activeFolder);
+  document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
+  document.getElementById('folderDesc').textContent = folder.desc;
+
+  let list = DATA.filter(d=>d.c===activeFolder);
+  if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
+  if(searchTerm) list = list.filter(d=>matchesSearch(d, searchTerm));
+
+  document.getElementById('folderCount').textContent = `${list.length} norma${list.length===1?'':'s'}`;
+
+  const container = document.getElementById('entriesList');
+  container.innerHTML = '';
+
+  if(list.length === 0){
+    container.innerHTML = `<div class="empty-state">Sin resultados en esta carpeta con los filtros actuales.</div>`;
+    return;
+  }
+
+  list.forEach(entry=>{
+    const primaryStage = entry.e[0];
+    const el = document.createElement('div');
+    el.className = 'entry';
+    const estadoTag = entry.st ? `<span class="tag ${entry.st.startsWith('derog')?'estado-derogado':'estado-parcial'}">${entry.st}</span>` : '';
+    const stageTags = entry.e.map(s=>`<span class="tag">${STAGE_LABEL[s]}</span>`).join('');
+    el.innerHTML = `
+      <div class="stamp" data-stage="${primaryStage}">${primaryStage}</div>
+      <div class="entry-body">
+        <div class="tipo-fecha">${entry.t}${entry.n!=='—'?' '+entry.n:''}${entry.d!=='—'?', '+entry.d:''} <span class="fuente">${entry.f}</span></div>
+        <p class="entry-title">${entry.ti}</p>
+        <div class="entry-tags">${stageTags}${estadoTag}</div>
+        ${entry.note ? `<p class="entry-note">${entry.note}</p>` : ''}
+      </div>
+      <a class="entry-link" href="${buildLink(entry)}" target="_blank" rel="noopener">${entry.url ? 'Ver documento ↗' : 'Consultar ↗'}</a>
+    `;
+    container.appendChild(el);
+  });
+}
+
+function renderCountNote(){
+  const total = DATA.length;
+  document.getElementById('countNote').textContent = `${total} normas indexadas en total · organización basada en el resumen normativo v3.0/2025 de la DG de Personal Docente`;
+}
+
+function renderAll(){
+  renderFolders();
+  renderStageChips();
+  renderEntries();
+}
+
+document.getElementById('stageChips').addEventListener('click', e=>{
+  const btn = e.target.closest('.chip');
+  if(!btn) return;
+  activeStage = btn.dataset.stage;
+  renderAll();
+});
+
+document.getElementById('searchInput').addEventListener('input', e=>{
+  searchTerm = e.target.value;
+  renderEntries();
+});
+
+renderCountNote();
+renderAll();
+
+// ============================================================
+// CONSULTOR DE LEGISLACIÓN (IA)
+// ============================================================
+// Cada alumno/a pega su propia clave gratuita de la API de Gemini
+// (aistudio.google.com/apikey). Se guarda solo en su navegador
+// (localStorage) y las preguntas se envían directamente desde el
+// navegador a Google — este sitio no tiene ni ve esa clave en ningún
+// servidor. No hace falta backend ni Cloudflare Worker.
+
+const GEMINI_MODEL = 'gemini-2.5-flash';
+
+const SYSTEM_INSTRUCTION = `Eres un asistente de consulta de legislación educativa de Extremadura, usado por opositores al Cuerpo de Maestros y por docentes.
+
+Reglas estrictas:
+- Responde ÚNICAMENTE a partir del CONTEXTO que se te proporciona en cada pregunta (fragmentos de leyes y/o índice de normativa). No uses conocimiento previo sobre leyes que no aparezca en el contexto.
+- Si el contexto no contiene la respuesta, dilo explícitamente: "No tengo el texto de esa norma cargado todavía; consulta el expediente o pregunta a tu profesor/a." No inventes artículos, decretos ni fechas.
+- Cuando cites, indica siempre la norma exacta (nombre, número, fecha) y el artículo si está disponible.
+- Estilo: claro, académico-pedagógico, sin relleno. Puedes usar prosa conectada, sin listas salvo que el usuario pida explícitamente un esquema.
+- Nunca fabriques nombres de programas, decretos o fechas que no estén en el contexto.`;
+
+// --- Trocea cada ley de leyes-texto.js en fragmentos por artículo ---
+function buildLawChunks(){
+  const chunks = [];
+  (typeof LAW_TEXTS !== 'undefined' ? LAW_TEXTS : []).forEach(law=>{
+    const parts = law.text.split(/(?=Art[íi]culo\s+\d)/gi).filter(p=>p.trim().length>30);
+    parts.forEach(p=>{
+      const heading = (p.match(/Art[íi]culo\s+\d+[^\n.]{0,60}/i) || [''])[0];
+      chunks.push({ law: law.title, heading, text: p.trim().slice(0, 1400) });
+    });
+  });
+  return chunks;
+}
+const LAW_CHUNKS = buildLawChunks();
+
+function normalize(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+// --- Recupera: fragmentos de leyes completas + entradas del índice (DATA) ---
+function retrieveContext(query, maxChars = 9000){
+  const terms = normalize(query).split(/\W+/).filter(t=>t.length>3);
+  const score = (text)=>{
+    const t = normalize(text);
+    return terms.reduce((acc,term)=> acc + (t.includes(term) ? 1 : 0), 0);
+  };
+
+  const scoredChunks = LAW_CHUNKS
+    .map(c=>({...c, score: score(c.law + ' ' + c.heading + ' ' + c.text)}))
+    .filter(c=>c.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,8);
+
+  const scoredEntries = DATA
+    .map(d=>({...d, score: score(d.ti + ' ' + (d.note||''))}))
+    .filter(d=>d.score>0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,10);
+
+  let context = '';
+  if(scoredChunks.length){
+    context += 'TEXTO COMPLETO DE NORMAS (fragmentos):\n';
+    scoredChunks.forEach(c=>{
+      context += `\n[${c.law}${c.heading?' — '+c.heading:''}]\n${c.text}\n`;
+    });
+  }
+  if(scoredEntries.length){
+    context += '\n\nÍNDICE DE NORMATIVA RELACIONADA (sin texto completo, solo referencia):\n';
+    scoredEntries.forEach(e=>{
+      context += `- ${e.t}${e.n!=='—'?' '+e.n:''}${e.d!=='—'?', '+e.d:''}: ${e.ti}\n`;
+    });
+  }
+  return context.slice(0, maxChars);
+}
+
+// --- UI wiring ---
+function getSavedKey(){
+  try { return localStorage.getItem('ia_gemini_key') || ''; }
+  catch(e){ return ''; }
+}
+function saveKey(key){
+  try { localStorage.setItem('ia_gemini_key', key); }
+  catch(e){ /* almacenamiento no disponible (p.ej. abierto con file://); seguimos solo en memoria */ }
+}
+function clearSavedKey(){
+  try { localStorage.removeItem('ia_gemini_key'); }
+  catch(e){}
+}
+
+const iaFab = document.getElementById('iaFab');
+const iaPanel = document.getElementById('iaPanel');
+const iaGate = document.getElementById('iaGate');
+const iaMessages = document.getElementById('iaMessages');
+const iaInputBar = document.getElementById('iaInputBar');
+let iaApiKey = getSavedKey();
+
+iaFab.onclick = ()=>{
+  iaPanel.classList.toggle('open');
+  if(iaApiKey){ showChat(); }
+};
+document.getElementById('iaClose').onclick = ()=> iaPanel.classList.remove('open');
+
+document.getElementById('iaCodeSubmit').onclick = ()=>{
+  const key = document.getElementById('iaCode').value.trim();
+  if(!key) return;
+  iaApiKey = key;
+  saveKey(key);
+  document.getElementById('iaErr').style.display = 'none';
+  showChat();
+};
+
+function showChat(){
+  iaGate.style.display = 'none';
+  iaMessages.style.display = 'flex';
+  iaInputBar.style.display = 'flex';
+  if(!iaMessages.dataset.greeted){
+    addMsg('system', 'Pregunta sobre currículo, evaluación, atención a la diversidad, admisión… Responderá citando la norma exacta cuando la tenga en el expediente.');
+    iaMessages.dataset.greeted = '1';
+  }
+}
+
+function addMsg(role, text, cite){
+  const el = document.createElement('div');
+  el.className = 'ia-msg ' + role;
+  el.textContent = text;
+  if(cite){
+    const c = document.createElement('span');
+    c.className = 'ia-cite';
+    c.textContent = cite;
+    el.appendChild(c);
+  }
+  iaMessages.appendChild(el);
+  iaMessages.scrollTop = iaMessages.scrollHeight;
+  return el;
+}
+
+async function sendIaQuestion(){
+  const input = document.getElementById('iaInput');
+  const question = input.value.trim();
+  if(!question) return;
+  input.value = '';
+  addMsg('user', question);
+  const typing = addMsg('bot', 'Consultando…');
+  typing.classList.add('ia-typing');
+  document.getElementById('iaSend').disabled = true;
+
+  try{
+    const context = retrieveContext(question);
+    const prompt = `CONTEXTO:\n${context}\n\nPREGUNTA DEL ALUMNO/A:\n${question}`;
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(iaApiKey)}`,
+      {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.2, maxOutputTokens: 900 }
+        })
+      }
+    );
+
+    const data = await res.json();
+    typing.remove();
+
+    if(!res.ok){
+      if(res.status === 400 || res.status === 401 || res.status === 403){
+        clearSavedKey();
+        iaApiKey = '';
+        iaGate.style.display = 'flex';
+        iaMessages.style.display = 'none';
+        iaInputBar.style.display = 'none';
+        document.getElementById('iaErr').style.display = 'block';
+      } else if(res.status === 429){
+        addMsg('system', 'Has agotado tu cuota gratuita de Gemini por ahora. Prueba de nuevo en un rato.');
+      } else {
+        addMsg('system', 'No se ha podido contactar con Gemini. Inténtalo de nuevo en un momento.');
+      }
+      return;
+    }
+
+    const answer = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('') || 'No se ha podido generar una respuesta.';
+    addMsg('bot', answer);
+  }catch(err){
+    typing.remove();
+    addMsg('system', 'Error de conexión con Gemini.');
+  }finally{
+    document.getElementById('iaSend').disabled = false;
+  }
+}
+document.getElementById('iaSend').onclick = sendIaQuestion;
+document.getElementById('iaInput').addEventListener('keydown', e=>{ if(e.key==='Enter') sendIaQuestion(); });
+document.getElementById('iaCode').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('iaCodeSubmit').click(); });
+</script>
+</body>
+</html>

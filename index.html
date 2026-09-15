@@ -273,17 +273,15 @@ footer strong{color:var(--ink);}
 /* ===== CONSULTOR IA ===== */
 #iaFab{
   position:fixed;bottom:22px;right:22px;z-index:50;
-  height:52px;padding:0 20px 0 16px;border-radius:30px;
+  width:60px;height:60px;border-radius:50%;
   background:var(--green-dark);color:var(--paper);
   border:2px solid var(--gold);
-  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px;letter-spacing:.02em;
-  cursor:pointer;
+  font-size:24px;cursor:pointer;
   box-shadow:0 4px 14px rgba(0,0,0,0.28);
-  display:flex;align-items:center;gap:9px;
+  display:flex;align-items:center;justify-content:center;
   transition:transform .15s ease;
 }
-#iaFab .ia-fab-icon{font-size:20px;line-height:1;}
-#iaFab:hover{transform:scale(1.05);}
+#iaFab:hover{transform:scale(1.06);}
 #iaPanel{
   position:fixed;bottom:96px;right:22px;z-index:50;
   width:min(420px,92vw);height:min(560px,72vh);
@@ -321,7 +319,7 @@ footer strong{color:var(--ink);}
   background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:0 14px;cursor:pointer;
 }
 .ia-inputbar button:disabled{opacity:.5;cursor:default;}
-.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;overflow-y:auto;}
+.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;}
 .ia-gate p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;}
 .ia-gate input{padding:9px 11px;border:1.3px solid var(--line);border-radius:4px;font-family:'Source Serif 4',serif;}
 .ia-gate button{
@@ -329,20 +327,6 @@ footer strong{color:var(--ink);}
   font-family:'JetBrains Mono',monospace;font-weight:600;cursor:pointer;
 }
 .ia-gate .ia-err{color:var(--stamp-red);font-size:12px;display:none;}
-.ia-help{
-  border:1px solid var(--line);border-radius:5px;padding:9px 12px;background:var(--paper-2);
-}
-.ia-help summary{
-  cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--green);
-  font-weight:600;list-style:none;
-}
-.ia-help summary::-webkit-details-marker{display:none;}
-.ia-help ol{margin:10px 0 8px;padding-left:18px;font-size:12.5px;line-height:1.6;color:var(--ink);}
-.ia-help li{margin-bottom:4px;}
-.ia-help > a{
-  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);
-  text-decoration:underline;
-}
 
 @media (max-width:860px){
   .layout{flex-direction:column;padding:0 14px 40px;}
@@ -366,10 +350,10 @@ footer strong{color:var(--ink);}
     <div>
       <p class="masthead-eyebrow">Academia Ábacos</p>
       <h1>Legislación Educativa<br><em>de Extremadura</em></h1>
-      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para opositores al Cuerpo de Maestros y docentes en activo.</p>
+      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para uso del profesorado y del personal asesor del CPR.</p>
     </div>
     <div class="header-meta">
-      <div>Versión del expediente: <strong>3.3 / 2026</strong></div>
+      <div>Versión del expediente: <strong>4.0 / 2026</strong></div>
       <div>Fuente base: DG de Personal Docente</div>
       <div>Actualizado: <strong id="today"></strong></div>
     </div>
@@ -410,27 +394,17 @@ footer strong{color:var(--ink);}
   <strong>Aviso sobre numeraciones repetidas:</strong> algunas Instrucciones comparten número y año pero proceden de órganos distintos (p. ej. varias Instrucciones 8/2024 y 17/2024, emitidas por la Dirección General de Formación Profesional, Innovación e Inclusión Educativa en un caso y por la Secretaría General de Educación y FP en otro). Se han mantenido separadas y se indica el órgano emisor en cada ficha para evitar confusiones.
 </footer>
 
-<button id="iaFab" title="Consultor de legislación (IA)"><span class="ia-fab-icon">⚖️</span><span>Consultor IA</span></button>
+<button id="iaFab" title="Consultor de legislación (IA)">⚖️</button>
 <div id="iaPanel">
   <div class="ia-header">
     <span>⚖️ Consultor de legislación</span>
     <button id="iaClose">✕</button>
   </div>
   <div id="iaGate" class="ia-gate">
-    <p>Este asistente responde citando la normativa de este expediente. Funciona con <strong>tu propia clave gratuita</strong> de la API de Gemini: se guarda solo en este navegador y nunca pasa por ningún servidor de terceros.</p>
-    <input type="password" id="iaCode" placeholder="Tu clave de la API de Gemini (AIza…)">
+    <p>Este asistente responde citando la normativa de este expediente. Pide a tu profesor/a la clave de acceso del grupo.</p>
+    <input type="password" id="iaCode" placeholder="Clave de acceso">
     <button id="iaCodeSubmit">Entrar</button>
-    <p class="ia-err" id="iaErr">Esa clave no ha funcionado. Revísala e inténtalo de nuevo.</p>
-    <details class="ia-help">
-      <summary>¿No tienes clave? Cómo conseguirla (gratis, 1 minuto) ↓</summary>
-      <ol>
-        <li>Entra en <strong>aistudio.google.com/apikey</strong> con tu cuenta de Google.</li>
-        <li>Pulsa <strong>"Create API key"</strong> (o "Crear clave de API").</li>
-        <li>Copia la clave que aparece (empieza por <strong>AIza…</strong>).</li>
-        <li>Pégala aquí arriba y pulsa "Entrar". Es gratis y solo se guarda en tu navegador.</li>
-      </ol>
-      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Abrir aistudio.google.com ↗</a>
-    </details>
+    <p class="ia-err" id="iaErr">Clave incorrecta. Inténtalo de nuevo.</p>
   </div>
   <div class="ia-messages" id="iaMessages" style="display:none;"></div>
   <div class="ia-inputbar" id="iaInputBar" style="display:none;">
@@ -460,6 +434,8 @@ const FOLDERS = [
   {id:'13', name:'Función docente', desc:'Condiciones de trabajo del profesorado itinerante y figuras de apoyo como el ATE o el Docente de Acompañamiento Escolar.'},
   {id:'14', name:'Instrucciones de inicio de curso', desc:'Instrucción anual que unifica las actuaciones de inicio y desarrollo de cada curso escolar, junto con las resoluciones complementarias de calendario y ratio del mismo curso. La ficha vigente corresponde al curso 2026/2027 (Instrucción n.º 15/2026).'},
   {id:'15', name:'Resoluciones y órdenes complementarias', desc:'Programas educativos, absentismo escolar y demás normativa complementaria que no encaja en una única etapa o bloque anterior.'},
+  {id:'16', name:'Plurilingüismo e idiomas', desc:'Secciones y centros bilingües, auxiliares de conversación, programas de inmersión lingüística, lengua y cultura portuguesa/árabe, movilidad e intercambios escolares.'},
+  {id:'17', name:'Legislación transversal', desc:'Protección de datos, igualdad y no discriminación: normativa que afecta al sistema educativo sin ser específicamente educativa.'},
 ];
 
 // e: etapas [INF, PRI, ESO, BAC, FP, COMUN]  f: fuente BOE/DOE  st: estado si no vigente
@@ -566,7 +542,7 @@ const DATA = [
 {c:'10',t:'Decreto',n:'12/2023',d:'22 de febrero',ti:'Decreto 12/2023, funcionamiento de las Redes de Innovación y Educación para el Desarrollo Sostenible',e:['COMUN'],f:'DOE'},
 {c:'10',t:'Orden',n:'—',d:'2 de octubre de 2024',ti:'Orden de 2 de octubre de 2024, convocatoria de incorporación a las Redes de Innovación y Educación para el Desarrollo Sostenible',e:['COMUN'],f:'DOE'},
 {c:'10',t:'Instrucción',n:'5/2026',d:'6 de julio de 2026',ti:'Instrucción 5/2026, de la Dirección General de Innovación e Inclusión Educativa, relativa al Plan de Educación y Competencia Digital de Extremadura "INNOVATED"',e:['COMUN'],f:'DOE',note:'Norma vigente para el curso 2026/2027. Sustituye a la Instrucción 18/2025 (que a su vez sustituyó a la 17/2024) de la misma Dirección General. Regula el Proyecto de Educación Digital (PED) de centro y los programas AdFE, CITE, CREA, FND, Librarium, Meteoescuela, RadioEdu y Centros INNOVATED.'},
-{c:'10',t:'Instrucción',n:'3/2025',d:'2024/2025',ti:'Instrucción 3/2025, acompañamiento en el programa "Código Escuela 4.0" durante el curso 2024/2025',e:['INF','PRI'],f:'DOE'},
+{c:'10',t:'Instrucción',n:'23/2025',d:'2025/2026',ti:'Instrucción 23/2025, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, por la que se regula el acompañamiento en el programa "Código Escuela 4.0" durante el curso educativo 2025/2026',e:['INF','PRI'],f:'DOE',note:'Corrige el número de instrucción de la versión anterior de esta ficha (figuraba como 3/2025).'},
 {c:'10',t:'Circular',n:'9/2017',d:'septiembre de 2017',ti:'Circular n.º 9/2017 de la SGE, protocolo de actuación ante urgencias sanitarias en los centros educativos',e:['COMUN'],f:'DOE'},
 // 11 Convivencia
 {c:'11',t:'Instrucción',n:'4/2021',d:'2021',ti:'Instrucción n.º 4/2021, elaboración e implementación del Plan para la Igualdad de Género en los centros educativos',e:['COMUN'],f:'DOE'},
@@ -574,7 +550,7 @@ const DATA = [
 {c:'11',t:'Orientaciones / Protocolo',n:'—',d:'—',ti:'Orientaciones para el Plan de Actuación ante alteraciones de la convivencia por acoso escolar. Protocolo de acoso escolar',e:['COMUN'],f:'DOE'},
 // 12 Admisión
 {c:'12',t:'Decreto',n:'128/2021',d:'17 de noviembre',ti:'Decreto 128/2021, regula la admisión del alumnado de Infantil, Primaria, ESO y Bachillerato en centros sostenidos con fondos públicos',e:['INF','PRI','ESO','BAC'],f:'DOE'},
-{c:'12',t:'Resolución',n:'—',d:'18 de diciembre de 2023',ti:'Resolución de 18 de diciembre de 2023, convoca el procedimiento de admisión del alumnado para el curso 2024/2025',e:['INF','PRI','ESO','BAC'],f:'DOE'},
+{c:'12',t:'Resolución',n:'—',d:'26 de noviembre de 2025',ti:'Resolución de 26 de noviembre de 2025, de la Secretaría General de Educación y Formación Profesional, por la que se convoca el procedimiento para la admisión del alumnado de Educación Infantil, Educación Primaria, Educación Secundaria Obligatoria y Bachillerato en centros sostenidos con fondos públicos, curso 2026/2027',e:['INF','PRI','ESO','BAC'],f:'DOE',note:'Sustituye a la Resolución de 18 de diciembre de 2023 (curso 2024/2025).'},
 {c:'12',t:'Orden',n:'—',d:'3 de enero de 2022',ti:'Orden de 3 de enero de 2022, desarrolla el procedimiento para la admisión del alumnado en centros sostenidos con fondos públicos',e:['INF','PRI','ESO','BAC'],f:'DOE'},
 // 13 Función docente
 {c:'13',t:'Resolución',n:'—',d:'30 de enero de 2007',ti:'Resolución de 30 de enero de 2007, condiciones de trabajo del profesorado itinerante (referencia cruzada con la carpeta 10)',e:['PRI'],f:'DOE'},
@@ -594,7 +570,7 @@ const DATA = [
 {c:'15',t:'Decreto',n:'142/2005',d:'7 de junio',ti:'Decreto 142/2005, prevención, control y seguimiento del absentismo escolar en Extremadura',e:['COMUN'],f:'DOE'},
 {c:'15',t:'Orden',n:'—',d:'19 de diciembre de 2005',ti:'Orden de 19 de diciembre de 2005, actuaciones de la Consejería de Educación para la prevención del absentismo escolar',e:['COMUN'],f:'DOE'},
 {c:'15',t:'Orden',n:'—',d:'15 de junio de 2007',ti:'Orden de 15 de junio de 2007, aprueba el Plan Regional para la Prevención, Control y Seguimiento del Absentismo Escolar',e:['COMUN'],f:'DOE'},
-{c:'15',t:'Instrucción',n:'1/2021',d:'2021-2022',ti:'Instrucción 1/2021, convocatoria del Programa Escolar de Consumo de Frutas y Hortalizas',e:['INF','PRI'],f:'DOE'},
+{c:'15',t:'Instrucción conjunta',n:'1/2025',d:'2025/2026',ti:'Instrucción conjunta 1/2025, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa y la Dirección General de Política Agraria Comunitaria, por la que se convoca a centros sostenidos con fondos públicos para participar en el "Programa Escolar de Consumo de Frutas, Hortalizas y Leche", curso 2025/2026',e:['INF','PRI'],f:'DOE',note:'Sustituye a la Instrucción 1/2021.'},
 {c:'15',t:'Instrucción',n:'8/2023',d:'2023',ti:'Instrucción n.º 8/2023, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, desarrollo del Programa INITIA XXI',e:['INF','PRI'],f:'DOE'},
 {c:'15',t:'Instrucción',n:'10/2026',d:'2026',ti:'Instrucción n.º 10/2026, de la Secretaría General de Educación, por la que se regula el programa experimental "Activa-mente: codocencia para el aprendizaje físicamente activo" y se establece la selección de centros públicos, curso 2026/2027',e:['INF','PRI'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/instruccion-activa-mente-1782213249.pdf',note:'Sustituye a la Instrucción 8/2024. No confundir con la Instrucción 8/2026 de la Secretaría General de Educación (programa "Ayuda entre iguales", carpeta 11) ni con otras Instrucciones 8/2024 o 8/2026 de otros órganos.'},
 {c:'15',t:'Instrucción',n:'9/2024',d:'2024-2025',ti:'Instrucción n.º 9/2024, de la Secretaría General de Educación y Formación Profesional, pruebas homologadas de certificación B1 de inglés en 4.º ESO y FP de grado medio bilingüe',e:['ESO','FP'],f:'DOE',note:'Órgano emisor: Secretaría General de Educación y Formación Profesional. No confundir con la Instrucción 9/2024 de TEA (carpeta 09).'},
@@ -603,11 +579,51 @@ const DATA = [
 {c:'15',t:'Instrucción',n:'16/2021',d:'2021',ti:'Instrucción n.º 16/2021, desarrollo de actividades palanca en centros participantes en el Programa PROA+ 21-24',e:['INF','PRI'],f:'DOE'},
 {c:'15',t:'Instrucción',n:'2/2023',d:'2023',ti:'Instrucción n.º 2/2023, organización y funcionamiento del refuerzo educativo competencial en centros PROA+',e:['INF','PRI'],f:'DOE'},
 {c:'15',t:'Instrucción',n:'3/2026',d:'2026',ti:'Instrucción 3/2026, de la Dirección General de Innovación e Inclusión Educativa, por la que se establecen los criterios de selección de centros y la organización y funcionamiento del Programa Conecta-2: refuerzo educativo desde la codocencia, curso 2026/2027',e:['PRI','ESO'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0004/documentos/Instrucci%C3%B3n_3_2026_CONECTA2_26_27%28F%29.pdf',note:'Sustituye a la Instrucción 18/2024. Corregida por la Corrección de errores de las Instrucciones 1/2026 a 4/2026 de la misma Dirección General.'},
-{c:'15',t:'Instrucción',n:'17/2024',d:'2024/2025',ti:'Instrucción n.º 17/2024, de la Secretaría General de Educación y Formación Profesional, realización de Intercambios Escolares',e:['ESO','BAC','FP'],f:'DOE',note:'Órgano emisor: Secretaría General de Educación y Formación Profesional. No confundir con la Instrucción 17/2024 de INNOVATED (carpeta 10).'},
-{c:'15',t:'Instrucción',n:'21/2024',d:'2024/2025',ti:'Instrucción n.º 21/2024, regula el Programa "Yo en el cole, tú en casa"',e:['COMUN'],f:'DOE'},
-{c:'15',t:'Instrucción',n:'22/2024',d:'6 de noviembre de 2024',ti:'Instrucción 22/2024, procedimiento para el desarrollo de programas intergeneracionales',e:['COMUN'],f:'DOE'},
+{c:'16',t:'Instrucción',n:'22/2025',d:'2 de octubre de 2025',ti:'Instrucción n.º 22/2025, de la Secretaría General de Educación y Formación Profesional, por la que se regula la realización de intercambios escolares con centros educativos del mismo nivel de otros países, curso 2025/2026',e:['ESO','BAC','FP'],f:'DOE',note:'Sustituye a la Instrucción 17/2024 (trasladada desde la carpeta de resoluciones complementarias).'},
+{c:'15',t:'Instrucción',n:'19/2025',d:'2025/2026',ti:'Instrucción n.º 19/2025, de la Secretaría General de Educación y Formación Profesional, que regula e implementa el programa "Yo en el cole, tú en casa" y establece el procedimiento de selección de centros, curso 2025/2026',e:['COMUN'],f:'DOE',note:'Sustituye a la Instrucción 21/2024.'},
+{c:'15',t:'Instrucción',n:'25/2025',d:'2025/2026',ti:'Instrucción n.º 25/2025, de la Secretaría General de Educación y Formación Profesional, por la que se establece el procedimiento de actuación para el desarrollo de programas intergeneracionales y se convoca la selección de centros, curso 2025/2026',e:['COMUN'],f:'DOE',note:'Sustituye a la Instrucción 22/2024. No confundir con la Instrucción 25/2025 de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa sobre el programa "Centros que Aprenden Enseñando" (carpeta 10), que comparte número pero es de otro órgano emisor.'},
 {c:'15',t:'Instrucción',n:'12/2026',d:'2026',ti:'Instrucción n.º 12/2026, de la Secretaría General de Educación, organización y funcionamiento del programa de refuerzo de la competencia lectora "EducaLectura", curso 2026/2027',e:['INF','PRI','ESO'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/educalectura-26-27-definitivo-f-1782213249.pdf',note:'Sustituye a la Instrucción 26/2024.'},
 {c:'15',t:'Instrucción',n:'13/2026',d:'2026',ti:'Instrucción n.º 13/2026, de la Secretaría General de Educación, organización y funcionamiento del programa de refuerzo de la competencia matemática "EducaMatex", curso 2026/2027',e:['PRI','ESO'],f:'DOE',url:'https://www.csif.es/uploads/articulo/archivosAdjuntos/educamatex-26-27-definitivo-f-1782213249.pdf',note:'Sustituye a la Instrucción 27/2024.'},
+
+{c:'04',t:'Real Decreto',n:'157/2022',d:'1 de marzo',ti:'Real Decreto 157/2022, por el que se establece el currículo básico de la Educación Primaria',e:['PRI'],f:'BOE',note:'Norma básica estatal (LOMLOE) que desarrolla el Decreto 107/2022 autonómico. No figuraba en el expediente; el Real Decreto 126/2014 (pre-LOMLOE) queda como referencia histórica.'},
+
+{c:'05',t:'Real Decreto',n:'217/2022',d:'29 de marzo',ti:'Real Decreto 217/2022, por el que se establece la ordenación y las enseñanzas mínimas de la Educación Secundaria Obligatoria',e:['ESO'],f:'BOE',note:'Norma básica estatal (LOMLOE) que desarrolla el Decreto 110/2022 autonómico.'},
+
+{c:'08',t:'Real Decreto',n:'984/2021',d:'16 de noviembre',ti:'Real Decreto 984/2021, por el que se regulan la evaluación y la promoción en la Educación Primaria, así como la evaluación, la promoción y la titulación en la ESO, el Bachillerato y la Formación Profesional',e:['PRI','ESO','BAC','FP'],f:'BOE'},
+{c:'08',t:'Decreto',n:'14/2022',d:'18 de febrero',ti:'Decreto 14/2022, por el que se regulan la evaluación y la promoción en la Educación Primaria, así como la evaluación, la promoción y la titulación en la ESO, el Bachillerato y la Formación Profesional en la Comunidad Autónoma de Extremadura',e:['PRI','ESO','BAC','FP'],f:'DOE',note:'Desarrollo autonómico del Real Decreto 984/2021.'},
+{c:'08',t:'Instrucción',n:'2/2026',d:'curso 2025/2026',ti:'Instrucción n.º 2/2026, de la Secretaría General de Educación y Formación Profesional, por la que se establece la ordenación y desarrollo de las evaluaciones de diagnóstico en Educación Primaria y en ESO para el curso académico 2025/2026',e:['PRI','ESO'],f:'DOE'},
+
+{c:'09',t:'Instrucción',n:'4/2023',d:'2023',ti:'Instrucción 4/2023, de la Dirección General de Innovación e Inclusión Educativa, referente a la actualización del registro sobre alumnado con necesidad específica de apoyo educativo en la plataforma Rayuela por parte de los SOEP',e:['COMUN'],f:'DOE'},
+
+{c:'10',t:'Instrucción',n:'20/2024',d:'16 de octubre de 2024',ti:'Instrucción 20/2024, de la Secretaría General de Educación y Formación Profesional, por la que se convoca la selección de proyectos de innovación a desarrollar por los centros pertenecientes a la Red de Bibliotecas Escolares de Extremadura, curso 2024/2025',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Instrucción',n:'21/2025',d:'2025/2026',ti:'Instrucción n.º 21/2025, de la Secretaría General de Educación y Formación Profesional, por la que se regula la solicitud y desarrollo de la actividad "Encuentros Literarios" dirigida a los centros de la Red de Bibliotecas Escolares de Extremadura, curso 2025/2026',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'13 de marzo de 2025',ti:'Orden de 13 de marzo de 2025 por la que se convoca el IV Concurso de Debate Escolar de Extremadura',e:['ESO','BAC','FP'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'15 de septiembre de 2025',ti:'Orden de 15 de septiembre de 2025 por la que se convoca el XV Concurso de Lectura en Público de Extremadura',e:['PRI','ESO'],f:'DOE',note:'Publicada en el DOE n.º 187.'},
+{c:'10',t:'Instrucción',n:'23/2014',d:'2014',ti:'Instrucción n.º 23/2014, de la Secretaría General de Educación, sobre actividades complementarias y extraescolares organizadas por los centros docentes sostenidos con fondos públicos de la Comunidad Autónoma de Extremadura',e:['COMUN'],f:'DOE',note:'Norma de referencia general citada también en la base cuadragésima primera de la Instrucción 15/2026 de inicio de curso (carpeta 14).'},
+{c:'10',t:'Instrucción',n:'28/2025',d:'2025/2026',ti:'Instrucción 28/2025, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, por la que se convoca el programa de formación e innovación educativa "¡Muévete!: formación para el desarrollo de la competencia profesional docente a través de estancias formativas", curso 2025/2026',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Instrucción',n:'25/2025',d:'2025/2026',ti:'Instrucción 25/2025, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, por la que se convoca la selección de centros educativos para el desarrollo del programa "Centros que Aprenden Enseñando" (CqAE), curso 2025/2026',e:['COMUN'],f:'DOE',note:'No confundir con la Instrucción 25/2025 de la Secretaría General de Educación sobre programas intergeneracionales (carpeta 15), que comparte número pero es de otro órgano emisor.'},
+
+{c:'13',t:'Orden',n:'—',d:'11 de septiembre de 2025',ti:'Orden de 11 de septiembre de 2025 por la que se convoca el procedimiento de evaluación de la función directiva en los centros docentes públicos no universitarios de la Comunidad Autónoma de Extremadura',e:['COMUN'],f:'DOE'},
+
+{c:'15',t:'Resolución',n:'—',d:'14 de noviembre de 2024',ti:'Resolución de 14 de noviembre de 2024, de la Secretaría General, por la que se da publicidad al Convenio entre la Consejería de Educación, Ciencia y Formación Profesional y Cruz Roja Española para el proyecto "Reanima" (primeros auxilios en Educación Primaria)',e:['PRI'],f:'DOE'},
+{c:'15',t:'Resolución',n:'—',d:'7 de enero de 2026',ti:'Resolución de 7 de enero de 2026, de la Secretaría General, por la que se da publicidad al Convenio con Cruz Roja Española para la continuidad del proyecto "Reanima"',e:['PRI'],f:'DOE'},
+
+{c:'16',t:'Resolución',n:'—',d:'24 de febrero de 2025',ti:'Resolución de 24 de febrero de 2025, de la Secretaría General de Educación y Formación Profesional, por la que se convocan inmersiones lingüísticas en lengua francesa, inglesa y portuguesa en Extremadura (PILEx), verano 2025',e:['PRI','ESO','BAC','FP'],f:'DOE'},
+{c:'16',t:'Instrucción',n:'7/2025',d:'2025/2026',ti:'Instrucción 7/2025, de la Secretaría General de Educación y Formación Profesional, por la que se regulan la estancia y actuación de los auxiliares de conversación en centros sostenidos con fondos públicos, curso 2025/2026',e:['COMUN'],f:'DOE'},
+{c:'16',t:'Orden',n:'—',d:'20 de abril de 2017',ti:'Orden de 20 de abril de 2017 por la que se regula el programa de Secciones Bilingües en centros docentes sostenidos con fondos públicos de la Comunidad Autónoma de Extremadura',e:['INF','PRI','ESO','BAC','FP'],f:'DOE'},
+{c:'16',t:'Orden',n:'—',d:'17 de abril de 2015',ti:'Orden de 17 de abril de 2015 por la que se establecen las características de los centros de Educación Infantil y Primaria bilingües de la Comunidad Autónoma de Extremadura',e:['INF','PRI'],f:'DOE'},
+{c:'16',t:'Resolución',n:'—',d:'26 de julio de 2024',ti:'Resolución de 26 de julio de 2024, de la Secretaría General, sobre el Programa Educativo Bilingüe-British Council',e:['INF','PRI','ESO'],f:'DOE'},
+{c:'16',t:'Instrucción',n:'24/2013',d:'5 de septiembre de 2013',ti:'Instrucción n.º 24/2013, de la Secretaría General de Educación, por la que se regula el funcionamiento del Programa de Lengua y Cultura Portuguesa en los centros educativos de Extremadura',e:['PRI','ESO','FP'],f:'DOE'},
+{c:'16',t:'Instrucción',n:'3/2026',d:'curso 2025/2026',ti:'Instrucción número 3/2026, de la Secretaría General de Educación y Formación Profesional, por la que se regula el libramiento de fondos a centros acogidos al Programa de Lengua y Cultura Portuguesa para la realización de convivencias escolares en Portugal, curso 2025/2026',e:['PRI','ESO','FP'],f:'DOE',note:'No confundir con la Instrucción 3/2026 de la Dirección General de Innovación e Inclusión Educativa sobre el Programa Conecta-2 (carpeta 15), que comparte número pero es de otro órgano emisor.'},
+{c:'16',t:'Instrucción',n:'13/2025',d:'13 de junio de 2025',ti:'Instrucción 13/2025, de la Secretaría General de Educación y Formación Profesional, que establece las características, autorización y funcionamiento del Plan Portugal en centros públicos de Infantil y Primaria, curso 2025/2026',e:['INF','PRI'],f:'DOE'},
+{c:'16',t:'Resolución',n:'—',d:'23 de mayo de 2018',ti:'Resolución de 23 de mayo de 2018, de la Secretaría General, por la que se da publicidad al Memorándum de entendimiento con el Camões Instituto para el Programa de Escuelas Bilingües e Interculturales de Frontera (PEBIF)',e:['PRI'],f:'DOE'},
+{c:'16',t:'Instrucción',n:'—',d:'27 de abril de 2026',ti:'Instrucción de 27 de abril de 2026, de la Secretaría General de Educación, Ciencia y Formación Profesional, por la que se convoca el programa de movilidad individual del alumnado con reciprocidad PicassoMob-Francia, curso 2026/2027',e:['ESO','BAC'],f:'DOE'},
+
+{c:'17',t:'Ley Orgánica',n:'3/2018',d:'5 de diciembre',ti:'Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales',e:['COMUN'],f:'BOE'},
+{c:'17',t:'Ley Orgánica',n:'2/2024',d:'1 de agosto',ti:'Ley Orgánica 2/2024, sobre representación paritaria y equilibrio entre mujeres y hombres',e:['COMUN'],f:'BOE'},
+{c:'17',t:'Ley',n:'15/2022',d:'12 de julio',ti:'Ley 15/2022, integral para la igualdad de trato y la no discriminación',e:['COMUN'],f:'BOE'},
+{c:'17',t:'Ley',n:'4/2023',d:'28 de febrero',ti:'Ley 4/2023, para la igualdad real y efectiva de las personas trans y para la garantía de los derechos de las personas LGTBI',e:['COMUN'],f:'BOE'},
+{c:'17',t:'Ley Orgánica',n:'3/2007',d:'22 de marzo',ti:'Ley Orgánica 3/2007, para la igualdad efectiva de mujeres y hombres',e:['COMUN'],f:'BOE'},
 ];
 
 // ---------- RENDER ----------
@@ -650,20 +666,12 @@ function matchesSearch(entry, term){
 
 function renderEntries(){
   const folder = FOLDERS.find(f=>f.id===activeFolder);
-  const searching = !!searchTerm;
+  document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
+  document.getElementById('folderDesc').textContent = folder.desc;
 
-  let list;
-  if(searching){
-    list = DATA.filter(d=>matchesSearch(d, searchTerm));
-    if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
-    document.getElementById('folderTitle').textContent = `Resultados para "${searchTerm}"`;
-    document.getElementById('folderDesc').textContent = 'Búsqueda en todo el expediente, en todas las carpetas. Borra el texto de búsqueda para volver a navegar por carpetas.';
-  } else {
-    list = DATA.filter(d=>d.c===activeFolder);
-    if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
-    document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
-    document.getElementById('folderDesc').textContent = folder.desc;
-  }
+  let list = DATA.filter(d=>d.c===activeFolder);
+  if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
+  if(searchTerm) list = list.filter(d=>matchesSearch(d, searchTerm));
 
   document.getElementById('folderCount').textContent = `${list.length} norma${list.length===1?'':'s'}`;
 
@@ -681,13 +689,12 @@ function renderEntries(){
     el.className = 'entry';
     const estadoTag = entry.st ? `<span class="tag ${entry.st.startsWith('derog')?'estado-derogado':'estado-parcial'}">${entry.st}</span>` : '';
     const stageTags = entry.e.map(s=>`<span class="tag">${STAGE_LABEL[s]}</span>`).join('');
-    const folderTag = searching ? `<span class="tag" style="border-color:var(--green);color:var(--green);">Carpeta ${entry.c}</span>` : '';
     el.innerHTML = `
       <div class="stamp" data-stage="${primaryStage}">${primaryStage}</div>
       <div class="entry-body">
         <div class="tipo-fecha">${entry.t}${entry.n!=='—'?' '+entry.n:''}${entry.d!=='—'?', '+entry.d:''} <span class="fuente">${entry.f}</span></div>
         <p class="entry-title">${entry.ti}</p>
-        <div class="entry-tags">${folderTag}${stageTags}${estadoTag}</div>
+        <div class="entry-tags">${stageTags}${estadoTag}</div>
         ${entry.note ? `<p class="entry-note">${entry.note}</p>` : ''}
       </div>
       <a class="entry-link" href="${buildLink(entry)}" target="_blank" rel="noopener">${entry.url ? 'Ver documento ↗' : 'Consultar ↗'}</a>
@@ -725,22 +732,10 @@ renderAll();
 // ============================================================
 // CONSULTOR DE LEGISLACIÓN (IA)
 // ============================================================
-// Cada alumno/a pega su propia clave gratuita de la API de Gemini
-// (aistudio.google.com/apikey). Se guarda solo en su navegador
-// (localStorage) y las preguntas se envían directamente desde el
-// navegador a Google — este sitio no tiene ni ve esa clave en ningún
-// servidor. No hace falta backend ni Cloudflare Worker.
-
-const GEMINI_MODEL = 'gemini-2.5-flash';
-
-const SYSTEM_INSTRUCTION = `Eres un asistente de consulta de legislación educativa de Extremadura, usado por opositores al Cuerpo de Maestros y por docentes.
-
-Reglas estrictas:
-- Responde ÚNICAMENTE a partir del CONTEXTO que se te proporciona en cada pregunta (fragmentos de leyes y/o índice de normativa). No uses conocimiento previo sobre leyes que no aparezca en el contexto.
-- Si el contexto no contiene la respuesta, dilo explícitamente: "No tengo el texto de esa norma cargado todavía; consulta el expediente o pregunta a tu profesor/a." No inventes artículos, decretos ni fechas.
-- Cuando cites, indica siempre la norma exacta (nombre, número, fecha) y el artículo si está disponible.
-- Estilo: claro, académico-pedagógico, sin relleno. Puedes usar prosa conectada, sin listas salvo que el usuario pida explícitamente un esquema.
-- Nunca fabriques nombres de programas, decretos o fechas que no estén en el contexto.`;
+// 1. Sustituye WORKER_URL por la URL de tu Cloudflare Worker (ver worker.js).
+// 2. La clave de acceso la define el profesor en el Worker (secreto ACCESS_CODE)
+//    y se la da a su alumnado; no viaja en este archivo.
+const WORKER_URL = 'https://TU-WORKER.tu-subdominio.workers.dev';
 
 // --- Trocea cada ley de leyes-texto.js en fragmentos por artículo ---
 function buildLawChunks(){
@@ -797,38 +792,24 @@ function retrieveContext(query, maxChars = 9000){
 }
 
 // --- UI wiring ---
-function getSavedKey(){
-  try { return localStorage.getItem('ia_gemini_key') || ''; }
-  catch(e){ return ''; }
-}
-function saveKey(key){
-  try { localStorage.setItem('ia_gemini_key', key); }
-  catch(e){ /* almacenamiento no disponible (p.ej. abierto con file://); seguimos solo en memoria */ }
-}
-function clearSavedKey(){
-  try { localStorage.removeItem('ia_gemini_key'); }
-  catch(e){}
-}
-
 const iaFab = document.getElementById('iaFab');
 const iaPanel = document.getElementById('iaPanel');
 const iaGate = document.getElementById('iaGate');
 const iaMessages = document.getElementById('iaMessages');
 const iaInputBar = document.getElementById('iaInputBar');
-let iaApiKey = getSavedKey();
+let iaAccessCode = sessionStorage.getItem('ia_access_code') || '';
 
 iaFab.onclick = ()=>{
   iaPanel.classList.toggle('open');
-  if(iaApiKey){ showChat(); }
+  if(iaAccessCode){ showChat(); }
 };
 document.getElementById('iaClose').onclick = ()=> iaPanel.classList.remove('open');
 
 document.getElementById('iaCodeSubmit').onclick = ()=>{
-  const key = document.getElementById('iaCode').value.trim();
-  if(!key) return;
-  iaApiKey = key;
-  saveKey(key);
-  document.getElementById('iaErr').style.display = 'none';
+  const code = document.getElementById('iaCode').value.trim();
+  if(!code) return;
+  iaAccessCode = code;
+  sessionStorage.setItem('ia_access_code', code);
   showChat();
 };
 
@@ -869,45 +850,26 @@ async function sendIaQuestion(){
 
   try{
     const context = retrieveContext(question);
-    const prompt = `CONTEXTO:\n${context}\n\nPREGUNTA DEL ALUMNO/A:\n${question}`;
-
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${encodeURIComponent(iaApiKey)}`,
-      {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.2, maxOutputTokens: 900 }
-        })
-      }
-    );
-
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ question, context, accessCode: iaAccessCode })
+    });
     const data = await res.json();
     typing.remove();
-
     if(!res.ok){
-      if(res.status === 400 || res.status === 401 || res.status === 403){
-        clearSavedKey();
-        iaApiKey = '';
-        iaGate.style.display = 'flex';
-        iaMessages.style.display = 'none';
-        iaInputBar.style.display = 'none';
-        document.getElementById('iaErr').style.display = 'block';
-      } else if(res.status === 429){
-        addMsg('system', 'Has agotado tu cuota gratuita de Gemini por ahora. Prueba de nuevo en un rato.');
+      if(res.status === 401){
+        sessionStorage.removeItem('ia_access_code');
+        addMsg('system', 'Clave de acceso incorrecta o caducada. Recarga la página para volver a introducirla.');
       } else {
-        addMsg('system', 'No se ha podido contactar con Gemini. Inténtalo de nuevo en un momento.');
+        addMsg('system', 'No se ha podido contactar con el asistente. Inténtalo de nuevo en un momento.');
       }
       return;
     }
-
-    const answer = data?.candidates?.[0]?.content?.parts?.map(p=>p.text).join('') || 'No se ha podido generar una respuesta.';
-    addMsg('bot', answer);
+    addMsg('bot', data.answer || 'Sin respuesta.');
   }catch(err){
     typing.remove();
-    addMsg('system', 'Error de conexión con Gemini.');
+    addMsg('system', 'Error de conexión con el asistente.');
   }finally{
     document.getElementById('iaSend').disabled = false;
   }

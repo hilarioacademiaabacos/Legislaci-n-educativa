@@ -270,64 +270,6 @@ footer{
 }
 footer strong{color:var(--ink);}
 
-/* ===== CONSULTOR IA ===== */
-#iaFab{
-  position:fixed;bottom:22px;right:22px;z-index:50;
-  width:60px;height:60px;border-radius:50%;
-  background:var(--green-dark);color:var(--paper);
-  border:2px solid var(--gold);
-  font-size:24px;cursor:pointer;
-  box-shadow:0 4px 14px rgba(0,0,0,0.28);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .15s ease;
-}
-#iaFab:hover{transform:scale(1.06);}
-#iaPanel{
-  position:fixed;bottom:96px;right:22px;z-index:50;
-  width:min(420px,92vw);height:min(560px,72vh);
-  background:var(--paper);border:1.5px solid var(--green);
-  border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  display:none;flex-direction:column;overflow:hidden;
-}
-#iaPanel.open{display:flex;}
-.ia-header{
-  background:var(--green-dark);color:var(--paper);
-  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
-  font-family:'Fraunces',serif;font-weight:600;font-size:15px;
-  border-bottom:3px double var(--gold);
-}
-.ia-header button{background:none;border:none;color:var(--paper);font-size:18px;cursor:pointer;opacity:.8;}
-.ia-header button:hover{opacity:1;}
-.ia-messages{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
-.ia-msg{max-width:88%;font-size:13.5px;line-height:1.55;padding:9px 12px;border-radius:6px;white-space:pre-wrap;}
-.ia-msg.user{align-self:flex-end;background:var(--paper-3);border:1px solid var(--line);}
-.ia-msg.bot{align-self:flex-start;background:var(--paper-2);border:1px solid var(--line);}
-.ia-msg.bot .ia-cite{
-  display:block;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--green);
-}
-.ia-msg.system{align-self:center;font-style:italic;color:var(--ink-soft);font-size:12px;background:none;}
-.ia-typing{align-self:flex-start;font-size:12px;color:var(--ink-soft);font-style:italic;}
-.ia-inputbar{
-  display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--paper-2);
-}
-.ia-inputbar input{
-  flex:1;font-family:'Source Serif 4',serif;font-size:13.5px;padding:9px 11px;
-  border:1.3px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);
-}
-.ia-inputbar button{
-  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
-  background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:0 14px;cursor:pointer;
-}
-.ia-inputbar button:disabled{opacity:.5;cursor:default;}
-.ia-gate{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;}
-.ia-gate p{font-size:13px;color:var(--ink-soft);line-height:1.6;margin:0;}
-.ia-gate input{padding:9px 11px;border:1.3px solid var(--line);border-radius:4px;font-family:'Source Serif 4',serif;}
-.ia-gate button{
-  background:var(--green);color:var(--paper);border:none;border-radius:4px;padding:10px;
-  font-family:'JetBrains Mono',monospace;font-weight:600;cursor:pointer;
-}
-.ia-gate .ia-err{color:var(--stamp-red);font-size:12px;display:none;}
-
 @media (max-width:860px){
   .layout{flex-direction:column;padding:0 14px 40px;}
   nav.folders{
@@ -353,7 +295,7 @@ footer strong{color:var(--ink);}
       <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para uso del profesorado y del personal asesor del CPR.</p>
     </div>
     <div class="header-meta">
-      <div>Versión del expediente: <strong>5.0 / 2026</strong></div>
+      <div>Versión del expediente: <strong>5.1 / 2026</strong></div>
       <div>Fuente base: DG de Personal Docente</div>
       <div>Actualizado: <strong id="today"></strong></div>
     </div>
@@ -394,26 +336,6 @@ footer strong{color:var(--ink);}
   <strong>Aviso sobre numeraciones repetidas:</strong> algunas Instrucciones comparten número y año pero proceden de órganos distintos (p. ej. varias Instrucciones 8/2024 y 17/2024, emitidas por la Dirección General de Formación Profesional, Innovación e Inclusión Educativa en un caso y por la Secretaría General de Educación y FP en otro). Se han mantenido separadas y se indica el órgano emisor en cada ficha para evitar confusiones.
 </footer>
 
-<button id="iaFab" title="Consultor de legislación (IA)">⚖️</button>
-<div id="iaPanel">
-  <div class="ia-header">
-    <span>⚖️ Consultor de legislación</span>
-    <button id="iaClose">✕</button>
-  </div>
-  <div id="iaGate" class="ia-gate">
-    <p>Este asistente responde citando la normativa de este expediente. Pide a tu profesor/a la clave de acceso del grupo.</p>
-    <input type="password" id="iaCode" placeholder="Clave de acceso">
-    <button id="iaCodeSubmit">Entrar</button>
-    <p class="ia-err" id="iaErr">Clave incorrecta. Inténtalo de nuevo.</p>
-  </div>
-  <div class="ia-messages" id="iaMessages" style="display:none;"></div>
-  <div class="ia-inputbar" id="iaInputBar" style="display:none;">
-    <input type="text" id="iaInput" placeholder="Pregunta sobre legislación educativa de Extremadura…">
-    <button id="iaSend">Enviar</button>
-  </div>
-</div>
-
-<script src="leyes-texto.js"></script>
 <script>
 document.getElementById('today').textContent = new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
 
@@ -782,155 +704,6 @@ document.getElementById('searchInput').addEventListener('input', e=>{
 
 renderCountNote();
 renderAll();
-
-// ============================================================
-// CONSULTOR DE LEGISLACIÓN (IA)
-// ============================================================
-// 1. Sustituye WORKER_URL por la URL de tu Cloudflare Worker (ver worker.js).
-// 2. La clave de acceso la define el profesor en el Worker (secreto ACCESS_CODE)
-//    y se la da a su alumnado; no viaja en este archivo.
-const WORKER_URL = 'https://TU-WORKER.tu-subdominio.workers.dev';
-
-// --- Trocea cada ley de leyes-texto.js en fragmentos por artículo ---
-function buildLawChunks(){
-  const chunks = [];
-  (typeof LAW_TEXTS !== 'undefined' ? LAW_TEXTS : []).forEach(law=>{
-    const parts = law.text.split(/(?=Art[íi]culo\s+\d)/gi).filter(p=>p.trim().length>30);
-    parts.forEach(p=>{
-      const heading = (p.match(/Art[íi]culo\s+\d+[^\n.]{0,60}/i) || [''])[0];
-      chunks.push({ law: law.title, heading, text: p.trim().slice(0, 1400) });
-    });
-  });
-  return chunks;
-}
-const LAW_CHUNKS = buildLawChunks();
-
-function normalize(s){
-  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-}
-
-// --- Recupera: fragmentos de leyes completas + entradas del índice (DATA) ---
-function retrieveContext(query, maxChars = 9000){
-  const terms = normalize(query).split(/\W+/).filter(t=>t.length>3);
-  const score = (text)=>{
-    const t = normalize(text);
-    return terms.reduce((acc,term)=> acc + (t.includes(term) ? 1 : 0), 0);
-  };
-
-  const scoredChunks = LAW_CHUNKS
-    .map(c=>({...c, score: score(c.law + ' ' + c.heading + ' ' + c.text)}))
-    .filter(c=>c.score>0)
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,8);
-
-  const scoredEntries = DATA
-    .map(d=>({...d, score: score(d.ti + ' ' + (d.note||''))}))
-    .filter(d=>d.score>0)
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,10);
-
-  let context = '';
-  if(scoredChunks.length){
-    context += 'TEXTO COMPLETO DE NORMAS (fragmentos):\n';
-    scoredChunks.forEach(c=>{
-      context += `\n[${c.law}${c.heading?' — '+c.heading:''}]\n${c.text}\n`;
-    });
-  }
-  if(scoredEntries.length){
-    context += '\n\nÍNDICE DE NORMATIVA RELACIONADA (sin texto completo, solo referencia):\n';
-    scoredEntries.forEach(e=>{
-      context += `- ${e.t}${e.n!=='—'?' '+e.n:''}${e.d!=='—'?', '+e.d:''}: ${e.ti}\n`;
-    });
-  }
-  return context.slice(0, maxChars);
-}
-
-// --- UI wiring ---
-const iaFab = document.getElementById('iaFab');
-const iaPanel = document.getElementById('iaPanel');
-const iaGate = document.getElementById('iaGate');
-const iaMessages = document.getElementById('iaMessages');
-const iaInputBar = document.getElementById('iaInputBar');
-let iaAccessCode = sessionStorage.getItem('ia_access_code') || '';
-
-iaFab.onclick = ()=>{
-  iaPanel.classList.toggle('open');
-  if(iaAccessCode){ showChat(); }
-};
-document.getElementById('iaClose').onclick = ()=> iaPanel.classList.remove('open');
-
-document.getElementById('iaCodeSubmit').onclick = ()=>{
-  const code = document.getElementById('iaCode').value.trim();
-  if(!code) return;
-  iaAccessCode = code;
-  sessionStorage.setItem('ia_access_code', code);
-  showChat();
-};
-
-function showChat(){
-  iaGate.style.display = 'none';
-  iaMessages.style.display = 'flex';
-  iaInputBar.style.display = 'flex';
-  if(!iaMessages.dataset.greeted){
-    addMsg('system', 'Pregunta sobre currículo, evaluación, atención a la diversidad, admisión… Responderá citando la norma exacta cuando la tenga en el expediente.');
-    iaMessages.dataset.greeted = '1';
-  }
-}
-
-function addMsg(role, text, cite){
-  const el = document.createElement('div');
-  el.className = 'ia-msg ' + role;
-  el.textContent = text;
-  if(cite){
-    const c = document.createElement('span');
-    c.className = 'ia-cite';
-    c.textContent = cite;
-    el.appendChild(c);
-  }
-  iaMessages.appendChild(el);
-  iaMessages.scrollTop = iaMessages.scrollHeight;
-  return el;
-}
-
-async function sendIaQuestion(){
-  const input = document.getElementById('iaInput');
-  const question = input.value.trim();
-  if(!question) return;
-  input.value = '';
-  addMsg('user', question);
-  const typing = addMsg('bot', 'Consultando…');
-  typing.classList.add('ia-typing');
-  document.getElementById('iaSend').disabled = true;
-
-  try{
-    const context = retrieveContext(question);
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ question, context, accessCode: iaAccessCode })
-    });
-    const data = await res.json();
-    typing.remove();
-    if(!res.ok){
-      if(res.status === 401){
-        sessionStorage.removeItem('ia_access_code');
-        addMsg('system', 'Clave de acceso incorrecta o caducada. Recarga la página para volver a introducirla.');
-      } else {
-        addMsg('system', 'No se ha podido contactar con el asistente. Inténtalo de nuevo en un momento.');
-      }
-      return;
-    }
-    addMsg('bot', data.answer || 'Sin respuesta.');
-  }catch(err){
-    typing.remove();
-    addMsg('system', 'Error de conexión con el asistente.');
-  }finally{
-    document.getElementById('iaSend').disabled = false;
-  }
-}
-document.getElementById('iaSend').onclick = sendIaQuestion;
-document.getElementById('iaInput').addEventListener('keydown', e=>{ if(e.key==='Enter') sendIaQuestion(); });
-document.getElementById('iaCode').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('iaCodeSubmit').click(); });
 </script>
 </body>
 </html>

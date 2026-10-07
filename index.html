@@ -292,10 +292,10 @@ footer strong{color:var(--ink);}
     <div>
       <p class="masthead-eyebrow">Academia Ábacos</p>
       <h1>Legislación Educativa<br><em>de Extremadura</em></h1>
-      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para uso del profesorado y del personal asesor del CPR.</p>
+      <p class="masthead-sub">Expediente de consulta rápida: normativa estatal y autonómica organizada por etapa educativa, para opositores al Cuerpo de Maestros y docentes en activo.</p>
     </div>
     <div class="header-meta">
-      <div>Versión del expediente: <strong>5.1 / 2026</strong></div>
+      <div>Versión del expediente: <strong>5.2 / 2026</strong></div>
       <div>Fuente base: DG de Personal Docente</div>
       <div>Actualizado: <strong id="today"></strong></div>
     </div>
@@ -366,6 +366,7 @@ const DATA = [
 // 01 LOE-LOMLOE
 {c:'01',t:'Ley Orgánica',n:'2/2006',d:'3 de mayo',ti:'Ley Orgánica 2/2006, de 3 de mayo, de Educación (LOE)',e:['COMUN'],f:'BOE',url:'https://www.educarex.es/pub/cont/com/0019/documentos/normativa/general/LOE_2-2006_3_de_mayo.pdf'},
 {c:'01',t:'Ley Orgánica',n:'3/2020',d:'29 de diciembre',ti:'Ley Orgánica 3/2020, de 29 de diciembre, por la que se modifica la LOE (LOMLOE)',e:['COMUN'],f:'BOE',url:'https://www.educarex.es/pub/cont/com/0019/documentos/normativa/general/LOMLOE.pdf'},
+{c:'01',t:'Ley Orgánica',n:'8/1985',d:'3 de julio',ti:'Ley Orgánica 8/1985, de 3 de julio, reguladora del Derecho a la Educación (LODE)',e:['COMUN'],f:'BOE',url:'https://www.boe.es/buscar/act.php?id=BOE-A-1985-12978'},
 // 02 LEEX
 {c:'02',t:'Ley',n:'4/2011',d:'7 de marzo',ti:'Ley 4/2011, de 7 de marzo, de Educación de Extremadura (LEEX)',e:['COMUN'],f:'DOE',url:'https://www.boe.es/eli/es-ex/l/2011/03/07/4/con'},
 // 03 Infantil
@@ -380,7 +381,9 @@ const DATA = [
 {c:'05',t:'Decreto',n:'82/2024',d:'23 de julio',ti:'Decreto 82/2024, por el que se establecen la ordenación y el currículo de la Educación Secundaria para personas adultas en Extremadura',e:['ESO'],f:'DOE'},
 {c:'05',t:'Orden',n:'—',d:'24 de marzo de 2023',ti:'Orden de 24 de marzo de 2023, por la que se regulan los programas de diversificación curricular en centros que imparten ESO en Extremadura',e:['ESO'],f:'DOE',url:'http://doe.juntaex.es/pdfs/doe/2023/630o/23050077.pdf',note:'En el resumen normativo de origen figura agrupada junto a Bachillerato; su contenido corresponde a ESO.'},
 {c:'05',t:'Modificación en trámite',n:'—',d:'anunciada en 2026',ti:'Modificación del Decreto 110/2022, de 22 de agosto, para incluir la materia optativa "Extremestiza: puente entre Extremadura y América" en 3.º y 4.º de ESO',e:['ESO'],f:'DOE',st:'en tramitación, sin publicar aún en el DOE',note:'Anunciada en la Instrucción 15/2026 (curso 2026/2027). Atribución docente: especialidades de Geografía e Historia, Lengua Castellana y Literatura, y Biología y Geología (base vigesimoquinta.2.f de la Instrucción 15/2026). Consulta la carpeta 14 para el detalle.'},
+{c:'05',t:'Real Decreto',n:'205/2023',d:'28 de marzo',ti:'Real Decreto 205/2023, por el que se establecen medidas relativas a la transición entre planes de estudios derivados de la Ley Orgánica 3/2020, de 29 de diciembre (LOMLOE)',e:['ESO','BAC'],f:'BOE',url:'https://boe.es/boe/dias/2023/03/29/pdfs/BOE-A-2023-7939.pdf',note:'Norma de referencia para la Instrucción n.º 4/2023 (recuperación de materias no superadas), ya recogida en esta carpeta.'},
 // 06 Bachillerato
+{c:'06',t:'Real Decreto',n:'243/2022',d:'5 de abril',ti:'Real Decreto 243/2022, por el que se establecen la ordenación y las enseñanzas mínimas del Bachillerato',e:['BAC'],f:'BOE',url:'https://boe.gob.es/boe/dias/2022/04/06/pdfs/BOE-A-2022-5521.pdf'},
 {c:'06',t:'Decreto',n:'109/2022',d:'22 de agosto',ti:'Decreto 109/2022, por el que se establecen la ordenación y el currículo del Bachillerato en Extremadura',e:['BAC'],f:'DOE',url:'http://doe.juntaex.es/pdfs/doe/2022/1640o/22040164.pdf',note:'Incluye la evaluación y promoción de la etapa (artículos 33, 34 y 35). Modificado por el Decreto 73/2025, de 8 de julio.'},
 {c:'06',t:'Decreto',n:'73/2025',d:'8 de julio',ti:'Decreto 73/2025, por el que se modifica el Decreto 109/2022, de 22 de agosto, por el que se establecen la ordenación y el currículo del Bachillerato para la Comunidad Autónoma de Extremadura',e:['BAC'],f:'DOE',url:'https://doe.juntaex.es/pdfs/doe/2025/1350o/25040124.pdf'},
 {c:'06',t:'Orden',n:'—',d:'16 de abril de 2024',ti:'Orden de 16 de abril de 2024, por la que se regula la organización y el funcionamiento del Bachillerato en Extremadura',e:['BAC'],f:'DOE',url:'https://doe.juntaex.es/pdfs/doe/2024/780o/24050067.pdf'},
@@ -442,6 +445,9 @@ const DATA = [
 {c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de Actuación Conjunta para el Alumnado con TDAH',e:['COMUN'],f:'DOE'},
 {c:'09',t:'Convenio / Protocolo',n:'2016',d:'2016',ti:'Convenio de colaboración 2016. Protocolo de Intervención con la ONCE',e:['COMUN'],f:'DOE'},
 {c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de Atención al niño/a y adolescente con diabetes en la escuela',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Instrucciones',n:'—',d:'—',ti:'Instrucciones del Secretario General Técnico de la Consejería de Educación, Ciencia y Tecnología, sobre el procedimiento de responsabilidad patrimonial por accidente escolar',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Ley',n:'2/1990',d:'26 de abril',ti:'Ley 2/1990, de 26 de abril, de Salud Escolar de Extremadura',e:['COMUN'],f:'DOE'},
+{c:'09',t:'Ley',n:'5/2018',d:'3 de mayo',ti:'Ley 5/2018, de 3 de mayo, de prevención del consumo de bebidas alcohólicas en la infancia y la adolescencia',e:['COMUN'],f:'BOE',url:'https://www.boe.es/buscar/pdf/2018/BOE-A-2018-6941-consolidado.pdf'},
 {c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo para la acogida y atención de niños/as con enfermedades raras o poco frecuentes',e:['COMUN'],f:'DOE'},
 {c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de colaboración Sanidad-Educación para la asignación de personal de enfermería a centros educativos',e:['COMUN'],f:'DOE'},
 {c:'09',t:'Protocolo',n:'—',d:'—',ti:'Protocolo de suicidio: Guía de prevención e intervención de la conducta suicida en el ámbito educativo',e:['COMUN'],f:'DOE'},
@@ -468,6 +474,11 @@ const DATA = [
 {c:'10',t:'Instrucción',n:'5/2026',d:'6 de julio de 2026',ti:'Instrucción 5/2026, de la Dirección General de Innovación e Inclusión Educativa, relativa al Plan de Educación y Competencia Digital de Extremadura "INNOVATED"',e:['COMUN'],f:'DOE',note:'Norma vigente para el curso 2026/2027. Sustituye a la Instrucción 18/2025 (que a su vez sustituyó a la 17/2024) de la misma Dirección General. Regula el Proyecto de Educación Digital (PED) de centro y los programas AdFE, CITE, CREA, FND, Librarium, Meteoescuela, RadioEdu y Centros INNOVATED.'},
 {c:'10',t:'Instrucción',n:'23/2025',d:'2025/2026',ti:'Instrucción 23/2025, de la Dirección General de Formación Profesional, Innovación e Inclusión Educativa, por la que se regula el acompañamiento en el programa "Código Escuela 4.0" durante el curso educativo 2025/2026',e:['INF','PRI'],f:'DOE',note:'Corrige el número de instrucción de la versión anterior de esta ficha (figuraba como 3/2025).'},
 {c:'10',t:'Circular',n:'9/2017',d:'septiembre de 2017',ti:'Circular n.º 9/2017 de la SGE, protocolo de actuación ante urgencias sanitarias en los centros educativos',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Circular',n:'7/2017',d:'2017',ti:'Circular 7/2017, de la Secretaría General de Educación, relativa a la solicitud de copias de pruebas escritas de evaluación',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Circular',n:'8/2017',d:'13 de septiembre de 2017',ti:'Circular 8/2017, de la Secretaría General de Educación, sobre los deberes escolares',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Orden',n:'—',d:'2 de julio de 2002',ti:'Orden de 2 de julio de 2002, por la que se establecen normas de organización de los Institutos de Educación Secundaria Obligatoria',e:['ESO'],f:'DOE',url:'https://doe.juntaex.es/pdfs/doe/2002/800O/02050388.pdf'},
+{c:'10',t:'Resolución',n:'—',d:'12 de diciembre de 2024',ti:'Resolución de 12 de diciembre de 2024, de la Secretaría General de Educación y Formación Profesional, por la que se clarifican la tipología y los cargos directivos de los centros educativos públicos',e:['COMUN'],f:'DOE'},
+{c:'10',t:'Real Decreto',n:'132/2010',d:'12 de febrero',ti:'Real Decreto 132/2010, por el que se establecen los requisitos mínimos de los centros que impartan las enseñanzas del segundo ciclo de Educación Infantil, Primaria y Secundaria',e:['INF','PRI','ESO'],f:'BOE',url:'https://boe.gob.es/boe/dias/2010/03/12/pdfs/BOE-A-2010-4132.pdf',note:'Modificado por el Real Decreto 658/2024, de 9 de julio.'},
 // 11 Convivencia
 {c:'11',t:'Instrucción',n:'4/2021',d:'2021',ti:'Instrucción n.º 4/2021, elaboración e implementación del Plan para la Igualdad de Género en los centros educativos',e:['COMUN'],f:'DOE'},
 {c:'11',t:'Instrucción',n:'8/2026',d:'9 de junio de 2026',ti:'Instrucción 8/2026, de la Secretaría General de Educación, por la que se convoca la selección de centros para el programa de convivencia escolar "Ayuda entre iguales. Alumnado acompañante. Espacios escolares para la convivencia", curso 2026/2027',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0054/documentos/Instrucci%C3%B3n_8_2026_Ayuda_entre_Iguales%28F%29.pdf',note:'Sustituye a la Instrucción 13/2024.'},
@@ -489,8 +500,10 @@ const DATA = [
 {c:'13',t:'Orden',n:'—',d:'29 de agosto de 2024',ti:'Orden de 29 de agosto de 2024, régimen de permisos del personal docente que imparte las enseñanzas de la Ley Orgánica 2/2006 en el ámbito de la Consejería de Educación de la Junta de Extremadura',e:['COMUN'],f:'DOE'},
 {c:'13',t:'Instrucción',n:'7/2022',d:'9 de mayo de 2022',ti:'Instrucción n.º 7/2022, de la Secretaría General de Educación, proceso de designación de la persona coordinadora de bienestar y protección en los centros educativos y concreción de sus funciones',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0054/documentos/INSTRUCCI%C3%93N_7_2002_DE_9_DE_MAYO_DE_COORDINADOR_DE_BIENESTAR%28F%29.pdf'},
 // 15 Resoluciones y órdenes complementarias
+{c:'15',t:'Ley',n:'3/2020',d:'29 de octubre',ti:'Ley 3/2020, de 29 de octubre, del sistema de préstamo de libros de texto de Extremadura y material escolar para alumnado de segundo ciclo de Infantil, Primaria, ESO, FP Básica y Educación Especial',e:['INF','PRI','ESO','FP'],f:'DOE',url:'https://www.boe.es/eli/es-ex/l/2020/10/29/3'},
 {c:'11',t:'Ley',n:'8/2021',d:'4 de junio',ti:'Ley 8/2021, de 4 de junio, de protección integral a la infancia y la adolescencia frente a la violencia',e:['COMUN'],f:'BOE',url:'https://www.boe.es/boe/dias/2021/06/05/pdfs/BOE-A-2021-9347.pdf',note:'Referencia para el Plan de Convivencia de los centros (art. 31) y para el requisito de acreditación de no haber sido condenado por delitos contra la libertad sexual (art. 57.1) exigido a todo el personal en contacto habitual con menores.'},
 {c:'11',t:'Instrucción',n:'6/2026',d:'2026',ti:'Instrucción 6/2026, de la Dirección General de Innovación e Inclusión Educativa, por la que se establece el uso de dispositivos digitales en los centros educativos',e:['COMUN'],f:'DOE',url:'https://www.educarex.es/pub/cont/com/0061/documentos/Instrucci%C3%B3n_6_2026_USO_DISPOSITIVOS_DIGITALES%28F%29.pdf',note:'Sustituye a la Instrucción 3/2024 (que regulaba el uso del teléfono móvil), cambiando además el órgano emisor de la Secretaría General de Educación a la Dirección General de Innovación e Inclusión Educativa.'},
+{c:'11',t:'Documento de referencia',n:'—',d:'—',ti:'Recomendaciones para trabajar la Ciberconvivencia en los centros educativos',e:['COMUN'],f:'DOE',note:'No es una norma jurídica: se incluye como documento orientativo de referencia, no vinculante.'},
 {c:'15',t:'Decreto',n:'142/2005',d:'7 de junio',ti:'Decreto 142/2005, prevención, control y seguimiento del absentismo escolar en Extremadura',e:['COMUN'],f:'DOE',url:'http://recursos.educarex.es/pdf/convivencia/05040161.pdf'},
 {c:'15',t:'Orden',n:'—',d:'19 de diciembre de 2005',ti:'Orden de 19 de diciembre de 2005, actuaciones de la Consejería de Educación para la prevención del absentismo escolar',e:['COMUN'],f:'DOE',url:'http://recursos.educarex.es/pdf/convivencia/05050652.pdf'},
 {c:'15',t:'Orden',n:'—',d:'15 de junio de 2007',ti:'Orden de 15 de junio de 2007, aprueba el Plan Regional para la Prevención, Control y Seguimiento del Absentismo Escolar',e:['COMUN'],f:'DOE',url:'http://recursos.educarex.es/pdf/normativa-sg/Orden15-06-2007.pdf'},
@@ -642,12 +655,19 @@ function matchesSearch(entry, term){
 
 function renderEntries(){
   const folder = FOLDERS.find(f=>f.id===activeFolder);
-  document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
-  document.getElementById('folderDesc').textContent = folder.desc;
+  const searching = !!searchTerm;
 
-  let list = DATA.filter(d=>d.c===activeFolder);
+  if(searching){
+    document.getElementById('folderTitle').textContent = `Resultados para "${searchTerm}"`;
+    document.getElementById('folderDesc').textContent = 'Búsqueda en todas las carpetas del expediente.';
+  } else {
+    document.getElementById('folderTitle').textContent = `${folder.id} · ${folder.name}`;
+    document.getElementById('folderDesc').textContent = folder.desc;
+  }
+
+  let list = searching ? DATA.slice() : DATA.filter(d=>d.c===activeFolder);
   if(activeStage !== 'ALL') list = list.filter(d=>d.e.includes(activeStage));
-  if(searchTerm) list = list.filter(d=>matchesSearch(d, searchTerm));
+  if(searching) list = list.filter(d=>matchesSearch(d, searchTerm));
 
   document.getElementById('folderCount').textContent = `${list.length} norma${list.length===1?'':'s'}`;
 
@@ -665,12 +685,13 @@ function renderEntries(){
     el.className = 'entry';
     const estadoTag = entry.st ? `<span class="tag ${entry.st.startsWith('derog')?'estado-derogado':'estado-parcial'}">${entry.st}</span>` : '';
     const stageTags = entry.e.map(s=>`<span class="tag">${STAGE_LABEL[s]}</span>`).join('');
+    const folderTag = searching ? `<span class="tag">Carpeta ${entry.c}</span>` : '';
     el.innerHTML = `
       <div class="stamp" data-stage="${primaryStage}">${primaryStage}</div>
       <div class="entry-body">
         <div class="tipo-fecha">${entry.t}${entry.n!=='—'?' '+entry.n:''}${entry.d!=='—'?', '+entry.d:''} <span class="fuente">${entry.f}</span></div>
         <p class="entry-title">${entry.ti}</p>
-        <div class="entry-tags">${stageTags}${estadoTag}</div>
+        <div class="entry-tags">${folderTag}${stageTags}${estadoTag}</div>
         ${entry.note ? `<p class="entry-note">${entry.note}</p>` : ''}
       </div>
       <a class="entry-link" href="${buildLink(entry)}" target="_blank" rel="noopener">${entry.url ? 'Ver documento ↗' : 'Consultar ↗'}</a>
@@ -681,7 +702,7 @@ function renderEntries(){
 
 function renderCountNote(){
   const total = DATA.length;
-  document.getElementById('countNote').textContent = `${total} normas indexadas en total · organización basada en el resumen normativo v3.0/2025 de la DG de Personal Docente`;
+  document.getElementById('countNote').textContent = `${total} normas indexadas en total`;
 }
 
 function renderAll(){
